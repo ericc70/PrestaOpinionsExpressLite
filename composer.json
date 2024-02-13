@@ -1,0 +1,14 @@
+{
+    "name": "ericc70/expressopinion-lite",
+    "autoload": {
+        "psr-4": {
+            "Ericc70\\ExpressopinionLite\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ericc70"
+        }
+    ],
+    "require": {}
+}
