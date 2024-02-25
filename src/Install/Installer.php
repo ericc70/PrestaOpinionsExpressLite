@@ -13,7 +13,7 @@ class Installer
 {
     private $tabs = [
         [
-            'class_name' => "c",
+            'class_name' => "AdminExpressOpinonLite",
             'parent_class_name' => "AdminCatalog",
             'name' => "Express Opinon Lite",
             'icon' => "",
@@ -91,11 +91,24 @@ class Installer
 
         return true;
     }
-    
-    public function installDatabase()
+    public function installDatabase(): bool
     {
+        return $this->executeQueries(Database::installQueries());
     }
-    public function uninstallDatabase()
+
+    public function uninstallDatabase(): bool
     {
+        return $this->executeQueries(Database::unistallQueries());
+    }
+
+    public function executeQueries(array $queries): bool
+    {
+        if (empty($queries)) return true;
+
+        foreach ($queries as $query) {
+            if (!Db::getInstance()->execute($query)) return false;
+        }
+
+        return true; // Ajout du retour manquant
     }
 }
