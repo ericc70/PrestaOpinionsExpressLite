@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ericc70\ExpressOpinionLite\install;
+namespace Ericc70\Expressopinionlite\Install;
 
+use Ericc70\Expressopinionlite\Install\Database;
 use Module;
 use Db;
+
 use Language;
 use Tab;
 
@@ -14,7 +16,7 @@ class Installer
     private $tabs = [
         [
             'class_name' => "AdminExpressOpinonLite",
-            'parent_class_name' => "AdminCatalog",
+            'parent_class_name' => "AdminParentCustomer",
             'name' => "Express Opinon Lite",
             'icon' => "",
             'wording' => "Opinion express des clients, version lite",
@@ -25,9 +27,17 @@ class Installer
 
     public function install(Module $module)
     {
-        if (!$this->registerHook($module)) return false;
-        if (!$this->installTab()) return false;
-        if (!$this->installDatabase()) return false;
+        // if (!$this->registerHook($module)) return false;
+        //if (!) return false;
+        //  if (!) return false;
+
+        try {
+             $this->installTab();
+            $this->installDatabase();
+
+        } catch (\Throwable $th) {
+            return throw $th;
+        }
         return true;
     }
 
@@ -40,9 +50,9 @@ class Installer
     public function registerHook(Module $module)
     {
         $hooks = [
-            'moduleRoutes',
-            'displayHome',
-            'displayHeader',
+            // 'moduleRoutes',
+            // 'displayHome',
+            // 'displayHeader',
         ];
         return (bool)$module->registerHook($hooks);
     }
@@ -60,7 +70,7 @@ class Installer
                 $tab->enabled = true;
                 $tab->module = $t['name'];;
                 $tab->class_name = $t['class_name'];
-                $tab->id_parent = Tab::getIdFromClassName($t['parent_class_name']); // Correction ici
+                $tab->id_parent = Tab::getIdFromClassName($t['parent_class_name']);
                 $tab->name = array();
 
                 foreach ($languages as $language) {
@@ -74,6 +84,8 @@ class Installer
                 $tab->save();
             }
         }
+
+        return true;
     }
 
 
@@ -103,12 +115,14 @@ class Installer
 
     public function executeQueries(array $queries): bool
     {
-        if (empty($queries)) return true;
+
+        
+        // if (empty($queries)) return true;
 
         foreach ($queries as $query) {
             if (!Db::getInstance()->execute($query)) return false;
         }
 
-        return true; // Ajout du retour manquant
+        return true; 
     }
 }

@@ -1,0 +1,3 @@
+expressopinion:
+  resource: "routes/default.yml"
+  prefix: "/express-opinion-lite/"

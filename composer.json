@@ -1,13 +1,13 @@
 {
-    "name": "ericc70/expressopinion-lite",
+    "name": "ericc70/expressopinionlite",
     "autoload": {
         "psr-4": {
-            "Ericc70\\ExpressOpinionLite\\": "src/"
+            "Ericc70\\Expressopinionlite\\": "src/"
         }
     },
     "authors": [
         {
-            "name": "ericc70"
+            "name": "Ericc70"
         }
     ],
     "require": {}

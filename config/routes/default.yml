@@ -1,0 +1,10 @@
+ec_expressOpinion_index:
+  path: /
+  methods: GET
+  defaults:
+    _controller: Ericc70\Expressopinionlite\Controller\AdminExpressOpinionLite::indexAction
+    _disable_module_prefix: true
+    _legacy_controller: AdminExpressOpinionLite
+    _legacy_link: AdminExpressOpinionLite
+
+
