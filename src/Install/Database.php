@@ -52,4 +52,12 @@ class Database
         $q[] = 'DROP TABLE IF EXISTS ' . _DB_PREFIX_ . 'ec_expressopinions_vote';
         return $q;
     }
+
+    public static function insertData()
+    {
+        $q= [];
+        $q[] = "INSERT INTO ". _DB_PREFIX_ ."ec_expressopinions_question (`id`, `content`) VALUES (NULL, '')";
+    
+        return $q;
+    }
 }

@@ -1,1 +1,44 @@
 {%  extends '@PrestaShop/Admin/layout.html.twig' %}
+{% block content %}
+<div id="calendar" class="panel">
+	<form action="http://localhost:8080/admin983auezka27chc8n6ya/index.php?controller=AdminStats&amp;token=108a4dad6bf4bec5afcd71c95a094d05" method="post" id="calendar_form" name="calendar_form" class="form-inline">
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="btn-group">
+					<button type="submit" name="submitDateDay" class="btn btn-default submitDateDay">Jour</button>
+					<button type="submit" name="submitDateMonth" class="btn btn-default submitDateMonth">Mois</button>
+					<button type="submit" name="submitDateYear" class="btn btn-default submitDateYear">Année</button>
+					<button type="submit" name="submitDateDayPrev" class="btn btn-default submitDateDayPrev">Jour-1</button>
+					<button type="submit" name="submitDateMonthPrev" class="btn btn-default submitDateMonthPrev">Mois-1</button>
+					<button type="submit" name="submitDateYearPrev" class="btn btn-default submitDateYearPrev">Année-1</button>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="row">
+					<div class="col-md-8">
+						<div class="row">
+							<div class="col-xs-6">
+								<div class="input-group">
+									<label class="input-group-addon">Du</label>
+									<input type="text" name="datepickerFrom" id="datepickerFrom" value="2024-01-01" class="datepicker form-control hasDatepicker">
+								</div>
+							</div>
+							<div class="col-xs-6">
+								<div class="input-group">
+									<label class="input-group-addon">au</label>
+									<input type="text" name="datepickerTo" id="datepickerTo" value="2024-02-27" class="datepicker form-control hasDatepicker">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="row">
+							<button type="submit" name="submitDatePicker" id="submitDatePicker" class="btn btn-default"><i class="icon-save"></i> Enregistrer</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+{% endblock %}

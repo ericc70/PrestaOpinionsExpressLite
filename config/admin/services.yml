@@ -1,0 +1,86 @@
+services:
+  _defaults:
+    public: true
+
+  # Formulaire : type 
+
+  expressopinionlite.type.question:
+    class: 'Ericc70\Expressopinionlite\Form\Type\QuestionType'
+    parent: "form.type.translatable.aware"
+    public: true
+    arguments:
+      - "@expressopinionlite.repository.question_repository"
+    tags:
+      - { name: form.type }
+
+
+# Formulaire : data provider
+
+  # expressopinionlites.form.question_data_configuration:
+
+  expressopinionlite.form.question_data_provider:
+    class: 'Ericc70\Expressopinionlite\Form\Data\Provider\QuestionFormDataProvider'
+    arguments:
+      - "@expressopinionlite.repository.question_repository"
+           
+    
+
+# Formulire : builder
+
+  expressopinionlites.form.builder.contact_form_builder:
+    class: 'PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Builder\FormBuilder'
+    factory: 'prestashop.core.form.builder.form_builder_factory:create'
+    arguments:
+      - 'Ericc70\Expressopinionlite\Form\Type\QuestionType'
+      - '@expressopinionlite.form.question_data_provider'
+
+
+# form Datahandler
+
+  expressopinionlites.form.datahandler.question_form_data_handler:
+    class: 'Ericc70\Expressopinionlite\Form\Data\DataHandler\QuestionFormDataHandler'
+    arguments:
+     - "@prestashop.core.command_bus"
+     - '@expressopinionlite.command.builder.question'
+
+# form handler
+
+  expressopinionlites.form.handler.contact_form_handler:
+    class: 'PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Handler\FormHandler'
+    factory: 'prestashop.core.form.identifiable_object.handler.form_handler_factory:create'
+    arguments:
+      - '@expressopinionlites.form.datahandler.question_form_data_handler'
+
+
+# form data provider
+
+
+
+# Repository
+
+  expressopinionlite.repository.question_repository:
+    class: 'Ericc70\Expressopinionlite\Repository\QuestionRepository'
+    factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
+    arguments: 
+      - Ericc70\Expressopinionlite\Entity\EcExpressopinionsQuestion
+
+
+#command builder
+  expressopinionlite.command.builder.question:
+    class: 'Ericc70\Expressopinionlite\Domain\CommandBuilder\QuestionCommandBuilder'
+   
+
+# command handler
+
+  expressopinionlite.command.handler.update_question:
+    class: 'Ericc70\Expressopinionlite\Domain\CommandHandler\UpdateQuestionCommandHandler'
+    arguments:
+      - "@doctrine.orm.default_entity_manager"
+      - "@expressopinionlite.repository.question_repository"
+     
+    tags:
+      - {
+          name: "tactician.handler",
+          command: 'Ericc70\Expressopinionlite\Domain\Command\UpdateQuestionCommand',
+        }
+

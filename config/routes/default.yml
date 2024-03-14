@@ -8,3 +8,13 @@ ec_expressOpinion_index:
     _legacy_link: AdminExpressOpinionLite
 
 
+ec_expressOpinion_question:
+  path: /question
+  methods: [GET, POST]
+  defaults:
+    _controller: Ericc70\Expressopinionlite\Controller\AdminQuestionController::indexAction
+    _disable_module_prefix: true
+    _legacy_controller: AdminQuestionController
+    _legacy_link: AdminQuestionController
+
+

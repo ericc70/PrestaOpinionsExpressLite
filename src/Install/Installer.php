@@ -15,12 +15,12 @@ class Installer
 {
     private $tabs = [
         [
-            'class_name' => "AdminExpressOpinonLite",
+            'class_name' => "AdminExpressOpinionLite",
             'parent_class_name' => "AdminParentCustomer",
             'name' => "Express Opinon Lite",
             'icon' => "",
             'wording' => "Opinion express des clients, version lite",
-            'wording_domain' => "Modules.ExpressOpinonLite.Admin",
+            'wording_domain' => "Modules.ExpressOpinionLite.Admin",
         ]
     ];
 

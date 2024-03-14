@@ -16,4 +16,11 @@ class AdminExpressOpinionLite extends FrameworkBundleAdminController
             'layoutTitle' =>$this->trans('Express Opinion Lite', 'Module.ExpressOpinionLite.Admin')
         ]);
     }
+
+    public function getToolBarButtons()
+    {
+        return
+         [
+            ];
+    }
 }
