@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Ericc70\Expressopnionlite\Repository\VoteHistoryRepository)
  * 
  */
-class VoteHistory
+class EcExpressopinionsVoteHistory
 {
     /**
      * @ORM\Id

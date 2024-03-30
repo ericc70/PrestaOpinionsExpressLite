@@ -1,6 +1,15 @@
 services:
   _defaults:
     public: true
+    
+  # Controller
+  expressopinionlite.controller.admin_response_controller:
+    class: 'Ericc70\Expressopinionlite\Controller\AdminResponseController'
+    arguments:
+      - '@prestashop.core.command_bus'
+      # - '@expressopinionlite.command.builder.reponse'
+
+
 
   # Formulaire : type 
 
@@ -63,13 +72,22 @@ services:
     factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
     arguments: 
       - Ericc70\Expressopinionlite\Entity\EcExpressopinionsQuestion
+ 
+  expressopinionlite.repository.response_repository:
+    class: 'Ericc70\Expressopinionlite\Repository\ResponseRepository'
+    factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
+    arguments: 
+      - Ericc70\Expressopinionlite\Entity\EcExpressopinionsResponse
 
 
 #command builder
+
   expressopinionlite.command.builder.question:
     class: 'Ericc70\Expressopinionlite\Domain\CommandBuilder\QuestionCommandBuilder'
    
-
+  expressopinionlite.command.builder.reponse:
+    class: 'Ericc70\Expressopinionlite\Domain\CommandBuilder\ReponseCommandBuilder'
+   
 # command handler
 
   expressopinionlite.command.handler.update_question:
@@ -83,4 +101,34 @@ services:
           name: "tactician.handler",
           command: 'Ericc70\Expressopinionlite\Domain\Command\UpdateQuestionCommand',
         }
+  expressopinionlite.command.handler.update_reponse:
+    class: 'Ericc70\Expressopinionlite\Domain\CommandHandler\UpdateReponseCommandHandler'
+    arguments:
+      - "@doctrine.orm.default_entity_manager"
+      - "@expressopinionlite.repository.response_repository"
+     
+    tags:
+      - {
+          name: "tactician.handler",
+          command: 'Ericc70\Expressopinionlite\Domain\Command\UpdateQuestionCommand',
+        }
 
+
+
+
+# query handler
+
+  expressopinionlite.query.get_reponse_by_question_handler:
+    class: 'Ericc70\Expressopinionlite\Domain\QueryHandler\GetReponseByQuestionHandler'
+    arguments:
+      - '@expressopinionlite.repository.response_repository'
+# config/services.yaml
+# services:
+#     Ericc70\Expressopinionlite\Domain\QueryHandler\GetReponseByQuestionHandler:
+#         arguments:
+#             $reposit
+# config/services.yaml
+# services:
+#     Ericc70\Expressopinionlite\Domain\QueryHandler\GetReponseByQuestionHandler:
+#         arguments:
+#             $repository: '@Your\ResponseRepository\Service' # Remplacez Your\ResponseRepository\Service par le nom réel de votre service ResponseRepository

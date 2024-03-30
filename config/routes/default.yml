@@ -18,3 +18,11 @@ ec_expressOpinion_question:
     _legacy_link: AdminQuestionController
 
 
+ec_expressOpinion_ajax_update_reponse:
+  path: /response/a/edit
+  methods: [PUT, POST]
+  defaults:
+    _controller: Ericc70\Expressopinionlite\Controller\AdminResponseController::updateByAjax
+    _disable_module_prefix: true
+    _legacy_controller: AdminResponseController
+    _legacy_link: AdminResponseController

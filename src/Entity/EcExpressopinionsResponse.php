@@ -6,10 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Ericc70\Expressopnionlite\Repository\ResponseRepository)
+ * @ORM\Entity(repositoryClass="Ericc70\Expressopinionlite\Repository\ResponseRepository")
  * 
  */
-class Response
+class EcExpressopinionsResponse
 {
     /**
      * @ORM\Id

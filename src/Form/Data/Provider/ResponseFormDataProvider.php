@@ -4,29 +4,29 @@ namespace Ericc70\Expressopinionlite\Form\Data\Provider;
 
 
 use Ericc70\Expressopinionlite\Repository\QuestionRepository; // Remplacez par votre propre repository
+use Ericc70\Expressopinionlite\Repository\ResponseRepository;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataProvider\FormDataProviderInterface;
 use Symfony\Component\Form\FormInterface;
 
-class QuestionFormDataProvider implements FormDataProviderInterface
+class ResponseFormDataProvider implements FormDataProviderInterface
 {
-    private $questionRepository;
+    private $repository;
 
 
-    public function __construct(QuestionRepository $questionRepository)
+    public function __construct(ResponseRepository $repository)
     {
-        $this->questionRepository = $questionRepository;
+        $this->repository = $repository;
     }
 
     public function getData($questionId)
     {
-        $data_db = $this->questionRepository->find($questionId);
+        $data_db = $this->repository->find($questionId);
     
         if ($data_db !== null) {
-            if ($data_db->getContent() !== null) {
+            
                 $data['content'] = $data_db->getContent();
-            } else {
-                $data['content'] = "";
-            }
+                $data['question_id'] = $data_db->getQuestionId(); 
+         
         } else {
           
           
