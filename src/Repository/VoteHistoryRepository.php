@@ -6,7 +6,7 @@ namespace Ericc70\Expressopinionlite\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-class VoteRepository extends EntityRepository
+class VoteHistoryRepository extends EntityRepository
 {
 
 }

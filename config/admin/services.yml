@@ -78,6 +78,17 @@ services:
     factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
     arguments: 
       - Ericc70\Expressopinionlite\Entity\EcExpressopinionsResponse
+  expressopinionlite.repository.vote_repository:
+    class: 'Ericc70\Expressopinionlite\Repository\VoteRepository'
+    factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
+    arguments: 
+      - Ericc70\Expressopinionlite\Entity\EcExpressopinionsVote
+  
+  expressopinionlite.repository.vote_history_repository:
+    class: 'Ericc70\Expressopinionlite\Repository\VoteHistoryRepository'
+    factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
+    arguments: 
+      - Ericc70\Expressopinionlite\Entity\EcExpressopinionsVoteHistory
 
 
 #command builder
@@ -88,6 +99,7 @@ services:
   expressopinionlite.command.builder.reponse:
     class: 'Ericc70\Expressopinionlite\Domain\CommandBuilder\ReponseCommandBuilder'
    
+
 # command handler
 
   expressopinionlite.command.handler.update_question:
@@ -106,11 +118,31 @@ services:
     arguments:
       - "@doctrine.orm.default_entity_manager"
       - "@expressopinionlite.repository.response_repository"
-     
     tags:
       - {
           name: "tactician.handler",
           command: 'Ericc70\Expressopinionlite\Domain\Command\UpdateQuestionCommand',
+        }
+  expressopinionlite.command.handler.add_vote:
+    class: 'Ericc70\Expressopinionlite\Domain\CommandHandler\AddVoteCommandHandler'
+    arguments:
+      - "@doctrine.orm.default_entity_manager"
+      - "@expressopinionlite.repository.vote_repository"
+    tags:
+      - {
+          name: "tactician.handler",
+          command: 'Ericc70\Expressopinionlite\Domain\Command\AddVoteCommand',
+        }
+
+  expressopinionlite.command.handler.add_vote_history:
+    class: 'Ericc70\Expressopinionlite\Domain\CommandHandler\AddVoteCommandHandler'
+    arguments:
+      - "@doctrine.orm.default_entity_manager"
+      - "@expressopinionlite.repository.vote_repository"
+    tags:
+      - {
+          name: "tactician.handler",
+          command: 'Ericc70\Expressopinionlite\Domain\Command\AddVoteCommand',
         }
 
 
@@ -122,13 +154,3 @@ services:
     class: 'Ericc70\Expressopinionlite\Domain\QueryHandler\GetReponseByQuestionHandler'
     arguments:
       - '@expressopinionlite.repository.response_repository'
-# config/services.yaml
-# services:
-#     Ericc70\Expressopinionlite\Domain\QueryHandler\GetReponseByQuestionHandler:
-#         arguments:
-#             $reposit
-# config/services.yaml
-# services:
-#     Ericc70\Expressopinionlite\Domain\QueryHandler\GetReponseByQuestionHandler:
-#         arguments:
-#             $repository: '@Your\ResponseRepository\Service' # Remplacez Your\ResponseRepository\Service par le nom réel de votre service ResponseRepository

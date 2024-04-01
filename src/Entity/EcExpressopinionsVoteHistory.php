@@ -27,6 +27,9 @@ class EcExpressopinionsVoteHistory
      */
     private $userId;
 
+
+    private  $questionId;
+
     // Getters and setters
     public function getId(): ?int
     {
@@ -53,6 +56,26 @@ class EcExpressopinionsVoteHistory
     public function setUserId(int $userId): self
     {
         $this->userId = $userId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of questionId
+     */ 
+    public function getQuestionId()
+    {
+        return $this->questionId;
+    }
+
+    /**
+     * Set the value of questionId
+     *
+     * @return  self
+     */ 
+    public function setQuestionId($questionId)
+    {
+        $this->questionId = $questionId;
 
         return $this;
     }

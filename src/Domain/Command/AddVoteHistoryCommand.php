@@ -2,17 +2,17 @@
 
 namespace Ericc70\Expressopinionlite\Domain\Command;
 
-class AddVoteCommand
+class AddVotetHistoryeCommand
 {
    
     private int $questionId;
-    private int $responseId;
+    private int $userId;
     
     public function __construct(array $data)
     {
        
         $this->questionId = $data['questionId'];
-        $this->responseId = $data['responseId'];
+        $this->userId = $data['userId'];
      
     }
 
@@ -29,9 +29,9 @@ class AddVoteCommand
     /**
      * Get the value of responseId
      */ 
-    public function getResponseId()
+    public function getUserId()
     {
-        return $this->responseId;
+        return $this->userId;
     }
 
 

@@ -25,7 +25,7 @@ class Database
 
         $queries[] = 'CREATE TABLE IF NOT EXISTS ' . _DB_PREFIX_ . 'ec_expressopinions_vote_history (
             `id` INT(11) NOT NULL AUTO_INCREMENT,
-            `created_at` DATETIME NOT NULL,
+            `created_at` DATE NOT NULL,
             `user_id` INT(11) NOT NULL,
              PRIMARY KEY (`id`)
                   
@@ -35,7 +35,7 @@ class Database
             `id` INT(11) NOT NULL AUTO_INCREMENT,
             `question_id` INT(11) NOT NULL,
             `response_id` INT(11) NOT NULL,
-            `created_at` DATETIME NOT NULL,
+            `created_at` DATE NOT NULL,
             PRIMARY KEY (`id`)
         )  ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=utf8';
 
