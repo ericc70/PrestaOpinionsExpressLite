@@ -93,7 +93,8 @@
 		}
 
 		.statusok{
-			margin-right: 5px;
+			margin-left: 20px;
+			padding: 0 3px;
 				background-color: green;
 				color: #fff;
 				width: 150px;
@@ -101,7 +102,8 @@
 		}
 
 		.stauserror{
-						margin-right: 5px;
+				margin-left: 20px;
+				padding:0 3px;
 				background-color: red;
 				color: #fff;
 				width: 150px;
@@ -201,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 			 // Stocker le contenu d'origine de la cellule
 
-		// console.log(originalContents)
+		 console.log(originalContents)
 
             const spinner = document.createElement('div');
             spinner.className = 'spinner'; // Ajoutez votre classe CSS pour le spinner
@@ -212,7 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ id, content: name, questionId : 1 }) //questionId
+                body: JSON.stringify({ id, content: name, questionId: 1 }) //questionId
             })
             .then(response => {
                 if (!response.ok) {
@@ -221,15 +223,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 return response.json();
             })
             .then(data => {
-                console.log(data.message); // Afficher la réponse du contrôleur
-				displayErrorMessage(cell, "Succes message here", "statusok");
+                console.log(data.message); 
+				displayNotify(cell, "Succes", "statusok");
                 spinner.remove(); 
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
                 cell.innerText = originalContents[rowId];
  				spinner.remove(); 
- 				displayErrorMessage(cell, "Error message here", "stauserror");
+ 				displayNotify(cell, "Error", "stauserror");
 			})
 
             console.log(`ID: ${id}, Name: ${name}`);
@@ -240,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-const displayErrorMessage = (cell, notifier, className) => {
+const displayNotify = (cell, notifier, className) => {
     const message = document.createElement('span');
     message.className = className;
     message.textContent = notifier;

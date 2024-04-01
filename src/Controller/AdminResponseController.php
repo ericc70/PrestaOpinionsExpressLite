@@ -16,39 +16,28 @@ use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 
 class AdminResponseController extends  FrameworkBundleAdminController
 {
-    private $commandBus;
-    private $commandBuilder;
-
-    // public function __construct(
-    //   CommandBusInterface $commandBus,
-    //    //  ReponseCommandBuilder $commandBuilder
-    //    )
-    // {
-    //    $this->commandBus = $commandBus;
-    //    // $this->commandBuilder = $commandBuilder;
-    // }
-
+   
    
     public function updateByAjax(Request $request): JsonResponse
     {
         // Récupérer les données JSON de la requête
         $data = json_decode($request->getContent(), true);
 
-        // $reponseBuilder= $this->get('expressopinionlite.command.builder.reponse');
-        // $reponseHandler="";
-        // $repbuild=$reponseBuilder->buildEditCommand();
-        // reponseHandler->handle()
-        // Vérifier si les données requises sont présentes
+     
         if (!isset($data['id'], $data['content'], $data['questionId'])) {
             return new JsonResponse(['success' => false, 'message' => 'Missing required data'], 400);
         }
 
         try {
-            // Construire la commande de mise à jour en utilisant le command builder
-           // $command = $this->commandBuilder->buildEditCommand($data['responseId'], $data['content'], $data['questionId']);
-
-            // Envoyer la commande au bus de commande pour exécution
-         // $this->commandBus->handle($command);
+$id=$data['id'];
+$data2 = [];
+$data2['content'] =$data['content'];
+$data2['questionId'] = $data['questionId'];
+            $reponseBuilder= $this->get('expressopinionlite.command.builder.reponse');
+           $command = $reponseBuilder->buildEditCommand($id, $data2);
+           $reponseHandler = $this->get('expressopinionlite.command.handler.update_reponse');
+                                   
+            $reponseHandler->handle($command);
 
             // Répondre avec succès
             return new JsonResponse(['success' => true, 'message' => 'Response updated successfully']);

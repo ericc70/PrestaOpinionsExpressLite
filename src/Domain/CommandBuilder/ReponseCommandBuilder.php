@@ -9,9 +9,9 @@ class ReponseCommandBuilder implements CommandBuilderInterface
 
     public function buildEditCommand($id, array $data)
     {
-        $id = 1;
+       // $id = 1;
         // Construire la commande de mise à jour en utilisant les données fournies
-        return new UpdateReponseCommand ($id, $data['content'], $data['idQuestion']); 
+        return new UpdateReponseCommand ($id, $data['content'], $data['questionId']); 
     }
     
 }
