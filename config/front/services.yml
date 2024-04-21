@@ -3,11 +3,11 @@ services:
     public: true
     
   # Controller
-  expressopinionlite.controller.admin_response_controller:
-    class: 'Ericc70\Expressopinionlite\Controller\AdminResponseController'
-    arguments:
-      - '@prestashop.core.command_bus'
-      # - '@expressopinionlite.command.builder.reponse'
+  # expressopinionlite.controller.admin_response_controller:
+  #   class: 'Ericc70\Expressopinionlite\Controller\AdminResponseController'
+  #   arguments:
+  #     - '@prestashop.core.command_bus'
+  #     # - '@expressopinionlite.command.builder.reponse'
 
 
 
@@ -15,7 +15,7 @@ services:
 
   expressopinionlite.type.question:
     class: 'Ericc70\Expressopinionlite\Form\Type\QuestionType'
-
+ 
     public: true
     arguments:
       - "@expressopinionlite.repository.question_repository"
@@ -36,29 +36,29 @@ services:
 
 # Formulire : builder
 
-  expressopinionlites.form.builder.contact_form_builder:
-    class: 'PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Builder\FormBuilder'
-    factory: 'prestashop.core.form.builder.form_builder_factory:create'
-    arguments:
-      - 'Ericc70\Expressopinionlite\Form\Type\QuestionType'
-      - '@expressopinionlite.form.question_data_provider'
+  # expressopinionlites.form.builder.contact_form_builder:
+  #   class: 'PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Builder\FormBuilder'
+  #   factory: 'prestashop.core.form.builder.form_builder_factory:create'
+  #   arguments:
+  #     - 'Ericc70\Expressopinionlite\Form\Type\QuestionType'
+  #     - '@expressopinionlite.form.question_data_provider'
 
 
 # form Datahandler
 
-  expressopinionlites.form.datahandler.question_form_data_handler:
-    class: 'Ericc70\Expressopinionlite\Form\Data\DataHandler\QuestionFormDataHandler'
-    arguments:
-     - "@prestashop.core.command_bus"
-     - '@expressopinionlite.command.builder.question'
+#   expressopinionlites.form.datahandler.question_form_data_handler:
+#     class: 'Ericc70\Expressopinionlite\Form\Data\DataHandler\QuestionFormDataHandler'
+#     arguments:
+#      - "@prestashop.core.command_bus"
+#      - '@expressopinionlite.command.builder.question'
 
-# form handler
+# # form handler
 
-  expressopinionlites.form.handler.contact_form_handler:
-    class: 'PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Handler\FormHandler'
-    factory: 'prestashop.core.form.identifiable_object.handler.form_handler_factory:create'
-    arguments:
-      - '@expressopinionlites.form.datahandler.question_form_data_handler'
+  # expressopinionlites.form.handler.contact_form_handler:
+  #   class: 'PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Handler\FormHandler'
+  #   factory: 'prestashop.core.form.identifiable_object.handler.form_handler_factory:create'
+  #   arguments:
+  #     - '@expressopinionlites.form.datahandler.question_form_data_handler'
 
 
 # form data provider
@@ -78,6 +78,7 @@ services:
     factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
     arguments: 
       - Ericc70\Expressopinionlite\Entity\EcExpressopinionsResponse
+
   expressopinionlite.repository.vote_repository:
     class: 'Ericc70\Expressopinionlite\Repository\VoteRepository'
     factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
@@ -134,16 +135,16 @@ services:
           command: 'Ericc70\Expressopinionlite\Domain\Command\AddVoteCommand',
         }
 
-  expressopinionlite.command.handler.add_vote_history:
-    class: 'Ericc70\Expressopinionlite\Domain\CommandHandler\AddVoteCommandHandler'
-    arguments:
-      - "@doctrine.orm.default_entity_manager"
-      - "@expressopinionlite.repository.vote_repository"
-    tags:
-      - {
-          name: "tactician.handler",
-          command: 'Ericc70\Expressopinionlite\Domain\Command\AddVoteCommand',
-        }
+  # expressopinionlite.command.handler.add_vote_history:
+  #   class: 'Ericc70\Expressopinionlite\Domain\CommandHandler\AddVoteCommandHandler'
+  #   arguments:
+  #     - "@doctrine.orm.default_entity_manager"
+  #     - "@expressopinionlite.repository.vote_history_repository"
+  #   tags:
+  #     - {
+  #         name: "tactician.handler",
+  #         command: 'Ericc70\Expressopinionlite\Domain\Command\AddVoteCommand',
+  #       }
 
 
 
@@ -154,3 +155,17 @@ services:
     class: 'Ericc70\Expressopinionlite\Domain\QueryHandler\GetReponseByQuestionHandler'
     arguments:
       - '@expressopinionlite.repository.response_repository'
+
+
+# query front
+  expressionlite.query.response_linked_to_question_query_handler:
+    class: 'Ericc70\Expressopinionlite\Domain\QueryHandler\ResponseLinkedToQuestionQueryHandler'
+    arguments:
+      - '@expressopinionlite.repository.question_repository'
+      - '@expressopinionlite.repository.response_repository'
+
+  expressionlite.query.date_older_vote_query_handler:
+    class: 'Ericc70\Expressopinionlite\Domain\QueryHandler\DateOlderVoteQueryHandler'
+    arguments:
+      - '@expressopinionlite.repository.vote_history_repository'
+    

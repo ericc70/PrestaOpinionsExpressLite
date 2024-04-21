@@ -1,11 +1,15 @@
 <?php
 
+namespace Ericc70\Expressopinionlite\Entity;
+
+
+
 use Doctrine\ORM\Mapping as ORM;
 
 
 /**
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Ericc70\Expressopnionlite\Repository\VoteHistoryRepository)
+ * @ORM\Entity(repositoryClass="Ericc70\Expressopinionlite\Repository\VoteHistoryRepository")
  * 
  */
 class EcExpressopinionsVoteHistory

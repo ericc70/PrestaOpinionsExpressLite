@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Ericc70\Expressopinionlite\Install;
 
 use Ericc70\Expressopinionlite\Install\Database;
+
 use Module;
 use Db;
-
 use Language;
 use Tab;
 
@@ -27,13 +27,15 @@ class Installer
 
     public function install(Module $module)
     {
-        // if (!$this->registerHook($module)) return false;
+        // if (!) return false;
         //if (!) return false;
         //  if (!) return false;
 
         try {
+            $this->registerHooks($module);
              $this->installTab();
             $this->installDatabase();
+          // $this->insertDataInDatabase();
 
         } catch (\Throwable $th) {
             return throw $th;
@@ -47,12 +49,12 @@ class Installer
             $this->uninstallDatabase();
     }
 
-    public function registerHook(Module $module)
+    public function registerHooks(Module $module)
     {
         $hooks = [
-            // 'moduleRoutes',
-            // 'displayHome',
-            // 'displayHeader',
+             'moduleRoutes',
+             'displayHome',
+             //'displayHeader',
         ];
         return (bool)$module->registerHook($hooks);
     }
@@ -113,7 +115,13 @@ class Installer
         return $this->executeQueries(Database::unistallQueries());
     }
 
-    public function executeQueries(array $queries): bool
+    public function insertDataInDatabase():bool
+    {
+        return $this->executeQueries(Database::insertData());
+
+    }
+
+    private function executeQueries(array $queries): bool
     {
 
         

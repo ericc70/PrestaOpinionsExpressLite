@@ -1,0 +1,40 @@
+/* Styles pour les boutons personnalisés */
+.custom-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.custom-button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Styles pour les labels (facultatif) */
+.radio-label {
+  margin-right: 10px;
+  border:none;
+}
+
+.radio-button {
+    appearance: none; /* Empêche le style par défaut du navigateur */
+}
+
+
+.ec-form-opinion-titile{
+  font-size: 1.5rem;
+  color:mediumvioletred;
+} 
+
+#container-expressopinion{
+
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding:10px;
+}
+
+.expressopinion-background01{
+    background-color: rgb(85, 64, 64);
+}

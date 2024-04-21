@@ -3,8 +3,9 @@
 namespace Ericc70\Expressopinionlite\Domain\CommandHandler;
 
 use Doctrine\ORM\EntityManagerInterface;
-use EcExpressopinionsVoteHistory;
+
 use Ericc70\Expressopinionlite\Domain\Command\AddVotetHistoryeCommand;
+use Ericc70\Expressopinionlite\Entity\EcExpressopinionsVoteHistory as EntityEcExpressopinionsVoteHistory;
 use Ericc70\Expressopinionlite\Repository\VoteHistoryRepository;
 
 
@@ -20,7 +21,7 @@ class AddVoteHistoryCommandHandler
         $this->repository = $repository;
     }
 
-    public function handle(EcExpressopinionsVoteHistory $entity, AddVotetHistoryeCommand $command)
+    public function handle(EntityEcExpressopinionsVoteHistory $entity, AddVotetHistoryeCommand $command)
     {
         try {
             $currentDateTime = new \DateTime();
