@@ -135,16 +135,16 @@ services:
           command: 'Ericc70\Expressopinionlite\Domain\Command\AddVoteCommand',
         }
 
-  # expressopinionlite.command.handler.add_vote_history:
-  #   class: 'Ericc70\Expressopinionlite\Domain\CommandHandler\AddVoteCommandHandler'
-  #   arguments:
-  #     - "@doctrine.orm.default_entity_manager"
-  #     - "@expressopinionlite.repository.vote_history_repository"
-  #   tags:
-  #     - {
-  #         name: "tactician.handler",
-  #         command: 'Ericc70\Expressopinionlite\Domain\Command\AddVoteCommand',
-  #       }
+  expressopinionlite.command.handler.add_vote_history:
+    class: 'Ericc70\Expressopinionlite\Domain\CommandHandler\AddVoteHistoryCommandHandler'
+    arguments:
+      - "@doctrine.orm.default_entity_manager"
+      - "@expressopinionlite.repository.vote_history_repository"
+    tags:
+      - {
+          name: "tactician.handler",
+          command: 'Ericc70\Expressopinionlite\Domain\Command\AddVoteCommandHistory',
+        }
 
 
 

@@ -1,5 +1,7 @@
 <?php
 
+use Ericc70\Expressopinionlite\Domain\Command\AddVoteCommand;
+use Ericc70\Expressopinionlite\Domain\Command\AddVoteHistoryCommand;
 use Ericc70\Expressopinionlite\Domain\Exeption\AnswerNotLinkedToQuestionException;
 use Ericc70\Expressopinionlite\Domain\Query\DateOlderVoteQuery;
 use Ericc70\Expressopinionlite\Domain\Query\ResponseLinkedToQuestionQuery;
@@ -12,7 +14,7 @@ class expressopinionlitevoteModuleFrontController extends ModuleFrontController
     {
         parent::initContent();
 
-
+        $customerId = (int) $this->context->customer->id;
 
         $requestData = $this->getRequestData();
 
@@ -25,8 +27,9 @@ class expressopinionlitevoteModuleFrontController extends ModuleFrontController
 
         $this->isValidVoteConstumer();
 
+        $this->insertVote($requestData['idQuestion'], $requestData['idReponse']);
         // $this->isValidVoteConstumer();
-
+        $this->insertVoteHistory($customerId);
 
 
         // Retourner une réponse JSON
@@ -109,14 +112,28 @@ class expressopinionlitevoteModuleFrontController extends ModuleFrontController
         return true;
     }
 
-    private function insertVote($idQuestion, $customerId)
+    private function insertVote($idQuestion, $idReponse)
     {
-        $addVote = $this->get('expressopinionlite.command.handler.add_vote');
-        $addVote->handle();
+
+        try {
+            $addVote = $this->get('expressopinionlite.command.handler.add_vote');
+            $addVote->handle(new AddVoteCommand(['questionId' => $idQuestion, 'responseId' => $idReponse]));
+        } catch (\Throwable $th) {
+            return $this->jsonResponse(['message' => $th->getMessage()], 400);
+        }
+        return true;
     }
-    private function insertVoteHistory($idQuestion, $customerId)
+
+    private function insertVoteHistory($customerId)
     {
-        $this->get('expressopinionlite.command.handler.add_vote_history');
+      
+        try {
+            $addVote = $this->get('expressopinionlite.command.handler.add_vote_history');
+            $addVote->handle(new AddVoteHistoryCommand(['userId' => $customerId ]));
+        } catch (\Throwable $th) {
+            return $this->jsonResponse(['message' => $th->getMessage()], 400);
+        }
+        return true;
     }
 
     private function jsonResponse($data, $statusCode)

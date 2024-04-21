@@ -5,8 +5,7 @@ namespace Ericc70\Expressopinionlite\Domain\CommandHandler;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Ericc70\Expressopinionlite\Domain\Command\AddVoteCommand;
-use Ericc70\Expressopinionlite\Entity\EcExpressopinionsVote as EntityEcExpressopinionsVote;
-use Ericc70\Expressopinionlite\Entity\EcExpressopinionsVoteHistory;
+use Ericc70\Expressopinionlite\Entity\EcExpressopinionsVote;
 use Ericc70\Expressopinionlite\Repository\VoteRepository;
 
 class AddVoteCommandHandler 
@@ -21,14 +20,15 @@ class AddVoteCommandHandler
         $this->repository = $repository;
     }
 
-    public function handle(EcExpressopinionsVoteHistory $entity, AddVoteCommand $command)
+    public function handle( AddVoteCommand $command)
     {
         try {
+            $entity = new EcExpressopinionsVote;
             $currentDateTime = new \DateTime();
 
             $entity->setQuestionId($command->getQuestionId());
             $entity->setResponseId($command->getResponseId());
-            $entity->setCreatedAt($currentDateTime);
+            $entity->setCreatedAt( \DateTime::createFromFormat('Y-m-d', date('Y-m-d')) );
             
             
             $this->entityManager->persist($entity);
