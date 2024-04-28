@@ -26,17 +26,17 @@ class EcExpressopinionsQuestion
     private $content;
 
     // Getters and setters
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function setId($id): void
+    public function setId(int $id): void
     {
         $this->id= (int) $id;
     }
 
-    public function getContent(): ?string
+    public function getContent(): string
     {
         return $this->content;
     }

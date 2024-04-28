@@ -26,3 +26,12 @@ ec_expressOpinion_ajax_update_reponse:
     _disable_module_prefix: true
     _legacy_controller: AdminResponseController
     _legacy_link: AdminResponseController
+
+ec_expressOpinion_ajax_load_data_vote:
+  path: /vote/a
+  methods: [PUT, POST]
+  defaults:
+    _controller: Ericc70\Expressopinionlite\Controller\AdminVoteController::loadData
+    _disable_module_prefix: true
+    _legacy_controller: AdminVoteController
+    _legacy_link: AdminVoteController

@@ -1,7 +1,8 @@
 {%  extends '@PrestaShop/Admin/layout.html.twig' %}
 {% block content %}
-<div id="calendar" class="panel">
-	<form action="http://localhost:8080/admin983auezka27chc8n6ya/index.php?controller=AdminStats&amp;token=108a4dad6bf4bec5afcd71c95a094d05" method="post" id="calendar_form" name="calendar_form" class="form-inline">
+<section class="container mt-5">
+<div id="calendar" class="card panel">
+	<form action="http://localhost:8080/admin983auezka27chc8n6ya/express-opinion-lite/vote/a" method="post" id="calendar_form" name="calendar_form" class="form-inline">
 		<div class="row">
 			<div class="col-lg-6">
 				<div class="btn-group">
@@ -33,7 +34,7 @@
 					</div>
 					<div class="col-md-4">
 						<div class="row">
-							<button type="submit" name="submitDatePicker" id="submitDatePicker" class="btn btn-default"><i class="icon-save"></i> Enregistrer</button>
+							<button type="submit" name="submitDatePicker" id="submitDatePicker" class="btn btn-default"><i class="icon-save"></i> Rechecher</button>
 						</div>
 					</div>
 				</div>
@@ -41,4 +42,200 @@
 		</div>
 	</form>
 </div>
+</section>
+<section class="container mt-5">
+    <div class ="row">
+        <div class="col-12">
+          
+        
+          	<div class="card">
+		
+        			<h3 class="card-header">
+					
+						{{ 'Question :' | trans({}, 'Modules.Expressopinionlite.Admin')}}
+					</h3>
+					<div class="card-block">
+						<p>  {{question}}</p>
+					</div>
+				
+				</div>
+        </div>
+    </div>
+
+</section>
+<section class="container mt-5">
+    <div class="row">
+        <div class="col-12 col-md-6"> 
+   	        <div class="card">
+	 			<h3 class="card-header">				
+					{{ 'data :' | trans({}, 'Modules.Expressopinionlite.Admin')}}
+				</h3>
+				<div class="card-body">
+                    <table class="table table-striped">
+						<thead>
+                            <tr>
+                            <th scope="col">reponse</th>
+                            <th scope="col">nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+              
+                        {# {% if question is not empty %} #}
+    {# Display question #}
+{# {% else %} #}
+    {# Display a default message or nothing #}
+{# {% endif %} #}
+                            <tr>
+                                <td>oui</td>
+                                <td>50</td>
+                            </tr>
+                            <tr>
+                                <td>non</td>
+                                <td>20</td>  
+                            </tr>
+                            <tr>
+                                <td>nspp</td>
+                                <td>7</td>           
+                            </tr>
+                        </tbody>
+                    </table>
+				</div>
+			</div>
+        </div>
+   
+        <div class="col-12 col-md-6">
+                 <div class="card">
+	 			<h3 class="card-header">				
+					{{ 'Graphique :' | trans({}, 'Modules.Expressopinionlite.Admin')}}
+				</h3>
+				<div class="card-body">
+                    chartjs
+				</div>
+			</div>
+        </div>
+    </div> 
+</section>
+{#  #}
+<script>
+
+// document.addEventListener('DOMContentLoaded', function() {
+//     const form = document.querySelector('#calendar_form');
+//     const submitButtons = form.querySelectorAll('button[type="submit"]');
+
+//     submitButtons.forEach(button => {
+//         button.addEventListener('click', function(event) {
+//             event.preventDefault();
+
+//             const buttonName = this.getAttribute('name');
+//             const formData = new FormData();
+//             const url = form.getAttribute('action');
+//             const method = form.getAttribute('method');
+
+//             // Ajoutez le nom du bouton soumis à formData
+//             formData.append('buttonName', buttonName);
+
+//             if (buttonName === "submitDatePicker") {
+//                 const dateFrom = document.querySelector('#datepickerFrom').value;
+//                 const dateTo = document.querySelector('#datepickerTo').value;
+//                 formData.append('dateFrom', dateFrom);
+//                 formData.append('dateTo', dateTo);
+//             }
+// 			console.log(formData)
+//             fetch(url, {
+//                 method: method,
+//                 body: formData
+//             })
+//             .then(response => {
+			
+// 				response.json()})
+//             .then(data => {
+//                 console.log(data);
+//                 // Traitez les données reçues ici
+//             })
+//             .catch(error => {
+//                 console.error('Erreur:', error);
+//             });
+//         });
+//     });
+// });
+function getBaseUrl() {
+    let pathSegments = window.location.pathname.split('/');
+    let prefix = pathSegments[1];
+    return window.location.origin + '/' + prefix + '/express-opinion-lite';
+}
+
+var params = new URLSearchParams(window.location.search);
+
+// Récupérer la valeur du paramètre _token
+var tokenValue = params.get('_token');
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('#calendar_form');
+    const submitButtons = form.querySelectorAll('button[type="submit"]');
+    const datepickerFrom = document.querySelector('#datepickerFrom');
+    const datepickerTo = document.querySelector('#datepickerTo');
+
+    submitButtons.forEach(button => {
+        button.addEventListener('click', function(event) {
+            handleFormSubmit(event, this);
+        });
+    });
+
+  
+    
+    datepickerFrom.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+
+            event.preventDefault()
+            triggerSubmitDatePicker();
+        }
+    });
+
+    datepickerTo.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault()
+            triggerSubmitDatePicker();
+        }
+    });
+
+    function handleFormSubmit(event, button) {
+        event.preventDefault();
+
+        const buttonName = button.getAttribute('name');
+        const formData = new FormData();
+        const url = form.getAttribute('action');
+        const method = form.getAttribute('method');
+
+        formData.append('buttonName', buttonName);
+
+        if (buttonName === "submitDatePicker") {
+            const dateFrom = document.querySelector('#datepickerFrom').value;
+            const dateTo = document.querySelector('#datepickerTo').value;
+            formData.append('dateFrom', dateFrom);
+            formData.append('dateTo', dateTo);
+        }
+	console.log(formData)
+       fetch(`${getBaseUrl()}/vote/a?_token=${tokenValue}`, {
+            method: method,
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            // Traitez les données reçues ici
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
+
+    function triggerSubmitDatePicker() {
+        const submitDatePickerButton = form.querySelector('#submitDatePicker');
+        submitDatePickerButton.click();
+    }
+});
+
+
+</script>
 {% endblock %}

@@ -154,3 +154,8 @@ services:
     class: 'Ericc70\Expressopinionlite\Domain\QueryHandler\GetReponseByQuestionHandler'
     arguments:
       - '@expressopinionlite.repository.response_repository'
+
+  expressopinionlite.query.search_vote_query_handler:
+    class: 'Ericc70\Expressopinionlite\Domain\QueryHandler\SearchVoteQueryHandler'
+    arguments:
+      - '@expressopinionlite.repository.vote_repository'
