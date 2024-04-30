@@ -109,65 +109,22 @@
 					{{ 'Graphique :' | trans({}, 'Modules.Expressopinionlite.Admin')}}
 				</h3>
 				<div class="card-body">
-                    chartjs
+                   <canvas id="chart-epl" width="400" height="400"></canvas>
 				</div>
 			</div>
         </div>
     </div> 
 </section>
 {#  #}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+let myChart = null;
 
-// document.addEventListener('DOMContentLoaded', function() {
-//     const form = document.querySelector('#calendar_form');
-//     const submitButtons = form.querySelectorAll('button[type="submit"]');
-
-//     submitButtons.forEach(button => {
-//         button.addEventListener('click', function(event) {
-//             event.preventDefault();
-
-//             const buttonName = this.getAttribute('name');
-//             const formData = new FormData();
-//             const url = form.getAttribute('action');
-//             const method = form.getAttribute('method');
-
-//             // Ajoutez le nom du bouton soumis à formData
-//             formData.append('buttonName', buttonName);
-
-//             if (buttonName === "submitDatePicker") {
-//                 const dateFrom = document.querySelector('#datepickerFrom').value;
-//                 const dateTo = document.querySelector('#datepickerTo').value;
-//                 formData.append('dateFrom', dateFrom);
-//                 formData.append('dateTo', dateTo);
-//             }
-// 			console.log(formData)
-//             fetch(url, {
-//                 method: method,
-//                 body: formData
-//             })
-//             .then(response => {
-			
-// 				response.json()})
-//             .then(data => {
-//                 console.log(data);
-//                 // Traitez les données reçues ici
-//             })
-//             .catch(error => {
-//                 console.error('Erreur:', error);
-//             });
-//         });
-//     });
-// });
 function getBaseUrl() {
     let pathSegments = window.location.pathname.split('/');
     let prefix = pathSegments[1];
     return window.location.origin + '/' + prefix + '/express-opinion-lite';
 }
-
-var params = new URLSearchParams(window.location.search);
-
-// Récupérer la valeur du paramètre _token
-var tokenValue = params.get('_token');
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -215,19 +172,18 @@ document.addEventListener('DOMContentLoaded', function() {
             formData.append('dateFrom', dateFrom);
             formData.append('dateTo', dateTo);
         }
-	console.log(formData)
-       fetch(`${getBaseUrl()}/vote/a?_token=${tokenValue}`, {
-            method: method,
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            // Traitez les données reçues ici
-        })
-        .catch(error => {
-            console.error(error);
-        });
+
+       fetchNewData(formData)
+            .then(data => {
+             resetData(); 
+               displayNewData(data); 
+            })
+            .catch(error => {
+                
+                console.error('Error fetching data:', error);
+            });
+  
+
     }
 
     function triggerSubmitDatePicker() {
@@ -236,6 +192,162 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+
+
+
+function resetData() {
+    const tbody = document.querySelector('tbody')
+    tbody.innerHTML = ''
+}
+
+
+function fetchNewData(formData) {
+
+    const params = new URLSearchParams(window.location.search)
+    const tokenValue = params.get('_token')
+
+    // Retourner la promesse fetch
+    return fetch(`${getBaseUrl()}/vote/a?_token=${tokenValue}`, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      //  console.log(data);
+        return data
+      
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+}
+
+
+function displayNewData(data) {
+    // write charjs
+    if (myChart !== null) {
+            myChart.destroy();
+        }
+
+        const ctx = document.getElementById('chart-epl').getContext('2d');
+        myChart = new Chart(ctx, chartConfig(data));
+
+    
+
+    // write tabla
+    const tbody = document.querySelector('tbody');
+    Object.keys(data).forEach(key => {
+        const items = JSON.parse(data[key]);
+     
+        // Ensuite, vérifiez si 'items' est un tableau avant d'utiliser 'forEach'
+        if (Array.isArray(items)) {
+            items.forEach(item => {
+                const row = document.createElement('tr');
+                const reponseCell = document.createElement('td');
+                reponseCell.textContent = item.responseContent;
+                const nombreCell = document.createElement('td');
+                nombreCell.textContent = item.voteCount;
+
+                row.appendChild(reponseCell);
+                row.appendChild(nombreCell);
+                tbody.appendChild(row);
+            });
+        } else {
+            console.log('items is not an array');
+        }
+    });
+}
+
+
+
+function loadData() {
+ console.log('start load data')
+   // Garder une référence au graphique pour pouvoir le mettre à jour
+
+    resetData()
+         const formData = new FormData()
+        formData.append('buttonName', 'submitDateDay');
+      fetchNewData(formData)
+            .then(data => {
+            
+               displayNewData(data);
+            })
+            .catch(error => {
+                
+                console.error('Error fetching data:', error);
+            });
+    
+}
+
+
+function getDateFormulaire()
+{
+    // par default date du jour
+    // ensuite calculer par rapport a nuttonName
+
+    // return string date
+}
+
+window.addEventListener('load', (event) => {
+    let myChart = null;
+   loadData();
+});
+
+// chart js
+// chart js
+function chartConfig(data) {
+    // Configuration du graphique
+    console.log(data)
+    console.log(Object.keys(data));
+      const dataArray = JSON.parse(data[0]);
+
+    const chartData = {
+        labels:  dataArray.map(item => item.responseContent),
+        datasets: [{
+            label: 'Votes',
+            data: dataArray.map(item => item.voteCount),
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    const chartConfig = {
+        type: 'doughnut',
+        data: chartData,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: false,
+                   
+                }
+            }
+        }
+    };
+
+    return chartConfig;
+}
+
+    // Sélectionnez le contexte du graphique
+   
 
 </script>
 {% endblock %}
