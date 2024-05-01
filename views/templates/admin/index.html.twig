@@ -51,11 +51,11 @@
           	<div class="card">
 		
         			<h3 class="card-header">
-					
-						{{ 'Question :' | trans({}, 'Modules.Expressopinionlite.Admin')}}
+					Date : Lundi 29 Avril
+						
 					</h3>
 					<div class="card-block">
-						<p>  {{question}}</p>
+						<p><span> {{ 'Question :' | trans({}, 'Modules.Expressopinionlite.Admin')}}</span>  {{question}}</p>
 					</div>
 				
 				</div>
@@ -63,7 +63,7 @@
     </div>
 
 </section>
-<section class="container mt-5">
+<section class="container mt-2">
     <div class="row">
         <div class="col-12 col-md-6"> 
    	        <div class="card">
@@ -206,7 +206,10 @@ function fetchNewData(formData) {
     const params = new URLSearchParams(window.location.search)
     const tokenValue = params.get('_token')
 
-    // Retourner la promesse fetch
+
+
+
+
     return fetch(`${getBaseUrl()}/vote/a?_token=${tokenValue}`, {
         method: 'POST',
         body: formData
@@ -214,6 +217,7 @@ function fetchNewData(formData) {
     .then(response => response.json())
     .then(data => {
       //  console.log(data);
+ 
         return data
       
     })
@@ -224,7 +228,7 @@ function fetchNewData(formData) {
 
 
 function displayNewData(data) {
-    // write charjs
+    //write charjs
     if (myChart !== null) {
             myChart.destroy();
         }
@@ -236,26 +240,46 @@ function displayNewData(data) {
 
     // write tabla
     const tbody = document.querySelector('tbody');
-    Object.keys(data).forEach(key => {
-        const items = JSON.parse(data[key]);
-     
-        // Ensuite, vérifiez si 'items' est un tableau avant d'utiliser 'forEach'
-        if (Array.isArray(items)) {
-            items.forEach(item => {
-                const row = document.createElement('tr');
-                const reponseCell = document.createElement('td');
-                reponseCell.textContent = item.responseContent;
-                const nombreCell = document.createElement('td');
-                nombreCell.textContent = item.voteCount;
+    // Object.keys(data).forEach(key => {
+    //     const items = JSON.parse(data[0]);
+    //  console.log(items)
+    //     // Ensuite, vérifiez si 'items' est un tableau avant d'utiliser 'forEach'
+    //     if (Array.isArray(items.data)) {
+    //         items.data.forEach(item => {
+    //             const row = document.createElement('tr');
+    //             const reponseCell = document.createElement('td');
+    //             reponseCell.textContent = item.responseContent;
+    //             const nombreCell = document.createElement('td');
+    //             nombreCell.textContent = item.voteCount;
 
-                row.appendChild(reponseCell);
-                row.appendChild(nombreCell);
-                tbody.appendChild(row);
-            });
-        } else {
-            console.log('items is not an array');
-        }
-    });
+    //             row.appendChild(reponseCell);
+    //             row.appendChild(nombreCell);
+    //             tbody.appendChild(row);
+    //         });
+    //     } else {
+    //         console.log('items is not an array');
+    //     }
+    // });
+const items = JSON.parse(data[0]);
+// Vérifiez si 'items' est un tableau avant d'utiliser 'forEach'
+if (Array.isArray(items.data)) {
+  items.data.forEach(item => {
+    const row = document.createElement('tr');
+    const reponseCell = document.createElement('td');
+    reponseCell.textContent = item.responseContent;
+    const nombreCell = document.createElement('td');
+    nombreCell.textContent = item.voteCount;
+
+    row.appendChild(reponseCell);
+    row.appendChild(nombreCell);
+    tbody.appendChild(row);
+  });
+} else {
+  console.log('items.data is not an array');
+}
+
+    // modifie affichage de date 
+// getDateFormulaire(data.dayactif);
 }
 
 
@@ -278,15 +302,51 @@ function loadData() {
             });
     
 }
+// function getDateFormulaire(buttonName) {
+//     let currentDate = new Date(); 
+//     console.log(buttonName)
+//     let fromDate = null, toDate = null;
 
+//     switch (buttonName) {
+//         case "submitDateDay":
+//             fromDate = toDate = currentDate.toISOString().split('T')[0];
+//             break;
+//         case "submitDateMonth":
+//             currentDate.setDate(1);
+//             fromDate = toDate = currentDate.toISOString().split('T')[0];
+//             break;
+//         case "submitDateYear":
+//             currentDate.setMonth(0); 
+//             currentDate.setDate(1);
+//             fromDate = toDate = currentDate.toISOString().split('T')[0];
+//             break;
+//         case "submitDateDayPrev":
+//             currentDate.setDate(currentDate.getDate() - 1);
+//             fromDate = toDate = currentDate.toISOString().split('T')[0];
+//             break;
+//         case "submitDateMonthPrev":
+//             currentDate.setMonth(currentDate.getMonth() - 1);
+//             fromDate = toDate = currentDate.toISOString().split('T')[0];
+//             break;
+//         case "submitDateYearPrev":
+//             currentDate.setFullYear(currentDate.getFullYear() - 1);
+//             fromDate = toDate = currentDate.toISOString().split('T')[0];
+//             break;
+//         case "submitDatePicker":
+//             // Récupérer les dates sélectionnées dans les champs de date
+//             fromDate = document.querySelector('#datepickerFrom').value;
+//             toDate = document.querySelector('#datepickerTo').value;
+//             break;
+//         default:
+//             // Utiliser la date actuelle pour tout autre cas
+//             fromDate = toDate = currentDate.toISOString().split('T')[0];
+//             break;
+//     }
 
-function getDateFormulaire()
-{
-    // par default date du jour
-    // ensuite calculer par rapport a nuttonName
+//     console.log(fromDate, toDate);
+//     return { fromDate, toDate };
+// }
 
-    // return string date
-}
 
 window.addEventListener('load', (event) => {
     let myChart = null;
@@ -297,15 +357,14 @@ window.addEventListener('load', (event) => {
 // chart js
 function chartConfig(data) {
     // Configuration du graphique
-    console.log(data)
-    console.log(Object.keys(data));
-      const dataArray = JSON.parse(data[0]);
 
+      const dataArray = JSON.parse(data[0]);
+const dataArrayData = dataArray.data
     const chartData = {
-        labels:  dataArray.map(item => item.responseContent),
+        labels:  dataArrayData.map(item => item.responseContent),
         datasets: [{
             label: 'Votes',
-            data: dataArray.map(item => item.voteCount),
+            data: dataArrayData.map(item => item.voteCount),
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',

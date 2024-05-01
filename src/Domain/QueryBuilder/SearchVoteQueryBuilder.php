@@ -29,7 +29,7 @@ class SearchVoteQueryBuilder
             return new SearchVoteQuery('ByDay', $d);
         }
         if ($data['buttonName'] == 'submitDateMonthPrev') {
-            $d = date('Y-m-d', strtotime("-1 months"));
+            $d = date('Y-m', strtotime("-1 months"));
             return new SearchVoteQuery('ByMonth', $d);
         }
         if ($data['buttonName'] == 'submitDateYearPrev') {

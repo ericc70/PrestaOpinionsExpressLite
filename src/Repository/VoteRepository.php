@@ -22,7 +22,12 @@ class VoteRepository extends EntityRepository
 
         $query = $qb->getQuery();
         $results = $query->getResult();
-        return $results;
+        $formattedResults = [
+            'votes' => $results,
+            'date' => $date
+        ];
+    
+        return $formattedResults;
     }
 
     public function searchByMonth($date)
@@ -38,7 +43,14 @@ class VoteRepository extends EntityRepository
         $query = $qb->getQuery();
         $results = $query->getResult();
 
-        return $results;
+        $formattedResults = [
+            'data' => $results,
+            'extra' => [
+                'date'=> $date
+        ]
+            ];
+
+        return $formattedResults;
     }
 
     public function searchByYear($date)
@@ -51,8 +63,14 @@ class VoteRepository extends EntityRepository
             ->groupBy('r.id');
         $query = $qb->getQuery();
         $results = $query->getResult();
-
-        return $results;
+        $formattedResults = [
+            'data' => $results,
+            'extra' => [
+                'date'=> $date
+        ]
+            ];
+  
+        return $formattedResults;
     }
     public function searchByDateRange($startDate,  $endDate)
     {
