@@ -23,10 +23,12 @@ class VoteRepository extends EntityRepository
         $query = $qb->getQuery();
         $results = $query->getResult();
         $formattedResults = [
-            'votes' => $results,
-            'date' => $date
-        ];
-    
+            'data' => $results,
+            'extra' => [
+                'date'=> $date
+        ]
+            ];
+            
         return $formattedResults;
     }
 
@@ -84,6 +86,13 @@ class VoteRepository extends EntityRepository
 
         $query = $qb->getQuery();
         $results = $query->getResult();
-        return $results;
+        $formattedResults = [
+            'data' => $results,
+            'extra' => [
+              'date'=> [$startDate, $endDate]
+        ]
+            ];
+            
+        return $formattedResults;
     }
 }

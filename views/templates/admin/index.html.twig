@@ -50,7 +50,7 @@
         
           	<div class="card">
 		
-        			<h3 class="card-header">
+        			<h3 class="card-header" id="date-viewer">
 					Date : Lundi 29 Avril
 						
 					</h3>
@@ -240,48 +240,31 @@ function displayNewData(data) {
 
     // write tabla
     const tbody = document.querySelector('tbody');
-    // Object.keys(data).forEach(key => {
-    //     const items = JSON.parse(data[0]);
-    //  console.log(items)
-    //     // Ensuite, vérifiez si 'items' est un tableau avant d'utiliser 'forEach'
-    //     if (Array.isArray(items.data)) {
-    //         items.data.forEach(item => {
-    //             const row = document.createElement('tr');
-    //             const reponseCell = document.createElement('td');
-    //             reponseCell.textContent = item.responseContent;
-    //             const nombreCell = document.createElement('td');
-    //             nombreCell.textContent = item.voteCount;
 
-    //             row.appendChild(reponseCell);
-    //             row.appendChild(nombreCell);
-    //             tbody.appendChild(row);
-    //         });
-    //     } else {
-    //         console.log('items is not an array');
-    //     }
-    // });
-const items = JSON.parse(data[0]);
-// Vérifiez si 'items' est un tableau avant d'utiliser 'forEach'
-if (Array.isArray(items.data)) {
-  items.data.forEach(item => {
-    const row = document.createElement('tr');
-    const reponseCell = document.createElement('td');
-    reponseCell.textContent = item.responseContent;
-    const nombreCell = document.createElement('td');
-    nombreCell.textContent = item.voteCount;
+    const items = JSON.parse(data[0]);
+    // Vérifiez si 'items' est un tableau avant d'utiliser 'forEach'
+    if (Array.isArray(items.data)) {
+    items.data.forEach(item => {
+        const row = document.createElement('tr');
+        const reponseCell = document.createElement('td');
+        reponseCell.textContent = item.responseContent;
+        const nombreCell = document.createElement('td');
+        nombreCell.textContent = item.voteCount;
 
-    row.appendChild(reponseCell);
-    row.appendChild(nombreCell);
-    tbody.appendChild(row);
-  });
-} else {
-  console.log('items.data is not an array');
+        row.appendChild(reponseCell);
+        row.appendChild(nombreCell);
+        tbody.appendChild(row);
+    });
+    } else {
+    console.log('items.data is not an array');
+    }
+
+    //write date
+    console.dir(data)
+    console.log(items.extra.date)
+    getDateFetch(items.extra.date)
+
 }
-
-    // modifie affichage de date 
-// getDateFormulaire(data.dayactif);
-}
-
 
 
 function loadData() {
@@ -302,50 +285,43 @@ function loadData() {
             });
     
 }
-// function getDateFormulaire(buttonName) {
-//     let currentDate = new Date(); 
-//     console.log(buttonName)
-//     let fromDate = null, toDate = null;
+function getDateFetch(data) {
+    console.log(data)
+    let textDate;
+    const contentDate = document.querySelector('#date-viewer')
 
-//     switch (buttonName) {
-//         case "submitDateDay":
-//             fromDate = toDate = currentDate.toISOString().split('T')[0];
-//             break;
-//         case "submitDateMonth":
-//             currentDate.setDate(1);
-//             fromDate = toDate = currentDate.toISOString().split('T')[0];
-//             break;
-//         case "submitDateYear":
-//             currentDate.setMonth(0); 
-//             currentDate.setDate(1);
-//             fromDate = toDate = currentDate.toISOString().split('T')[0];
-//             break;
-//         case "submitDateDayPrev":
-//             currentDate.setDate(currentDate.getDate() - 1);
-//             fromDate = toDate = currentDate.toISOString().split('T')[0];
-//             break;
-//         case "submitDateMonthPrev":
-//             currentDate.setMonth(currentDate.getMonth() - 1);
-//             fromDate = toDate = currentDate.toISOString().split('T')[0];
-//             break;
-//         case "submitDateYearPrev":
-//             currentDate.setFullYear(currentDate.getFullYear() - 1);
-//             fromDate = toDate = currentDate.toISOString().split('T')[0];
-//             break;
-//         case "submitDatePicker":
-//             // Récupérer les dates sélectionnées dans les champs de date
-//             fromDate = document.querySelector('#datepickerFrom').value;
-//             toDate = document.querySelector('#datepickerTo').value;
-//             break;
-//         default:
-//             // Utiliser la date actuelle pour tout autre cas
-//             fromDate = toDate = currentDate.toISOString().split('T')[0];
-//             break;
-//     }
+    // Si data est une chaîne de caractères
+    if (typeof data === 'string') {
+        textDate = formatDate(data)
+        contentDate.innerText = textDate
+    } 
+    // Si data est un tableau
+    else if (Array.isArray(data)) {
+        let dateArray = []
+        for (let i = 0; i < data.length; i++) {
+            dateArray.push(formatDate(data[i]))
+        }
+        contentDate.innerText = dateArray.join(' - ')
+    }
+}
+function formatDate(dateStr) {
+    let parts = dateStr.split('-');
+    let date;
 
-//     console.log(fromDate, toDate);
-//     return { fromDate, toDate };
-// }
+    if (parts.length === 1) {
+        // Only year is provided
+        date = new Date(parts[0], 0, 1);
+        return `année ${date.getFullYear()}`;
+    } else if (parts.length === 2) {
+        // Year and month are provided
+        date = new Date(parts[0], parts[1] - 1, 1); // 
+        return `${date.toLocaleString('fr-FR', { month: 'long' })} ${date.getFullYear()}`;
+    } else if (parts.length === 3) {
+        // Full date is provided
+        date = new Date(parts[0], parts[1] - 1, parts[2]); // 
+        return `${date.getDate()} ${date.toLocaleString('fr-FR', { month: 'long' })} ${date.getFullYear()}`;
+    }
+}
 
 
 window.addEventListener('load', (event) => {
