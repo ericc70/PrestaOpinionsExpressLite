@@ -1,10 +1,36 @@
 {%  extends '@PrestaShop/Admin/layout.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    {# <link rel="stylesheet" href="{{ asset('themes/your-theme/assets/css/custom-admin.css') }}"> #}
+ <style>
+        .bg-c-blue {
+            background: linear-gradient(45deg,#4099ff,#73b4ff);
+        }
+        .fs-8{
+            font-size: 0.8rem;
+        }
+        .fs-12{
+            font-size: 1.2rem;
+        }
+        .fs-11{
+            font-size: 1.1rem;
+        }
+        .f-color-b-01{
+            color: #f0f8ff;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
-<section class="container mt-5">
-<div id="calendar" class="card panel">
+<section class="container mt-5 card panel p-2" id="calendar">
+
+
+		
+        <div class="row">
 	<form action="http://localhost:8080/admin983auezka27chc8n6ya/express-opinion-lite/vote/a" method="post" id="calendar_form" name="calendar_form" class="form-inline">
-		<div class="row">
-			<div class="col-lg-6">
+			<div class="col-12 ">
 				<div class="btn-group">
 					<button type="submit" name="submitDateDay" class="btn btn-default submitDateDay">Jour</button>
 					<button type="submit" name="submitDateMonth" class="btn btn-default submitDateMonth">Mois</button>
@@ -14,55 +40,50 @@
 					<button type="submit" name="submitDateYearPrev" class="btn btn-default submitDateYearPrev">Année-1</button>
 				</div>
 			</div>
-			<div class="col-lg-6">
-				<div class="row">
-					<div class="col-md-8">
-						<div class="row">
-							<div class="col-xs-6">
-								<div class="input-group">
-									<label class="input-group-addon">Du</label>
-									<input type="text" name="datepickerFrom" id="datepickerFrom" value="2024-01-01" class="datepicker form-control hasDatepicker">
-								</div>
-							</div>
-							<div class="col-xs-6">
-								<div class="input-group">
-									<label class="input-group-addon">au</label>
-									<input type="text" name="datepickerTo" id="datepickerTo" value="2024-02-27" class="datepicker form-control hasDatepicker">
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="row">
-							<button type="submit" name="submitDatePicker" id="submitDatePicker" class="btn btn-default"><i class="icon-save"></i> Rechecher</button>
-						</div>
-					</div>
+		</div>
+
+		<div class="row pt-2">				
+			<div class="col-6 col-md-4">
+        		<div class="input-group">
+					<span class="input-group-text" id="addon-wrapping">Du</span>
+					<input type="date" name="datepickerFrom" id="datepickerFrom" value="2024-01-01" class="datepicker form-control hasDatepicker">
 				</div>
 			</div>
-		</div>
-	</form>
-</div>
-</section>
-<section class="container mt-5">
-    <div class ="row">
-        <div class="col-12">
-          
-        
-          	<div class="card">
-		
-        			<h3 class="card-header" id="date-viewer">
-					Date : Lundi 29 Avril
-						
-					</h3>
-					<div class="card-block">
-						<p><span> {{ 'Question :' | trans({}, 'Modules.Expressopinionlite.Admin')}}</span>  {{question}}</p>
-					</div>
-				
+			<div class="col-6 col-md-4">
+				<div class="input-group">
+					 <span class="input-group-text" id="addon-wrapping">Au</span>
+					<input type="date" name="datepickerTo" id="datepickerTo" value="2024-02-27" class="datepicker form-control hasDatepicker">
 				</div>
-        </div>
-    </div>
-
+			</div>		
+			<div class="col-12 col-md-4 pt-2 pt-md-0">		
+				<button type="submit" name="submitDatePicker" id="submitDatePicker" class="btn btn-default"><i class="icon-save"></i> Rechecher</button>		
+			</div>
+            </form>
+		</div>	
 </section>
+
+<section class="container bg-c-blue mt-5 p-2">
+  <div class="row">
+    <div class="col-10">
+      <div class="row">
+        <div class="col">
+          <p class="m-b-20 font-weight-bold font-italic fs-8">Question :</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+           <p class="m-b-0 fw-bolder fs-11 ml-3 f-color-b-01">{{ question }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-2 d-flex align-items-center justify-content-end">
+        <div class="fs-12 font-weight-bold" id="date-viewer" >...</div>
+    </div>
+  </div>
+</section>
+
+
+
 <section class="container mt-2">
     <div class="row">
         <div class="col-12 col-md-6"> 
