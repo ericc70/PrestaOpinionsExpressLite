@@ -1,0 +1,20 @@
+.bg-c-blue {
+    background: linear-gradient(45deg,#4099ff,#73b4ff);
+}
+.fs-8{
+    font-size: 0.8rem;
+}
+.fs-12{
+    font-size: 1.2rem;
+}
+.fs-11{
+    font-size: 1.1rem;
+}
+.f-color-b-01{
+    color: #f0f8ff;
+}
+
+.spinner {
+margin: auto;
+background-color:transparent !important;
+}

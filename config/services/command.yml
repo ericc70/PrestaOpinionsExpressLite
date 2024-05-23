@@ -1,0 +1,59 @@
+services:
+  _defaults:
+    public: true
+#command builder
+
+  expressopinionlite.command.builder.question:
+    class: 'Ericc70\Expressopinionlite\Domain\CommandBuilder\QuestionCommandBuilder'
+   
+  expressopinionlite.command.builder.reponse:
+    class: 'Ericc70\Expressopinionlite\Domain\CommandBuilder\ReponseCommandBuilder'
+   
+# command handler
+
+  expressopinionlite.command.handler.update_question:
+    class: 'Ericc70\Expressopinionlite\Domain\CommandHandler\UpdateQuestionCommandHandler'
+    arguments:
+      - "@doctrine.orm.default_entity_manager"
+      - "@expressopinionlite.repository.question_repository"
+     
+    tags:
+      - {
+          name: "tactician.handler",
+          command: 'Ericc70\Expressopinionlite\Domain\Command\UpdateQuestionCommand',
+        }
+  expressopinionlite.command.handler.update_reponse:
+    class: 'Ericc70\Expressopinionlite\Domain\CommandHandler\UpdateReponseCommandHandler'
+    arguments:
+      - "@doctrine.orm.default_entity_manager"
+      - "@expressopinionlite.repository.response_repository"
+    tags:
+      - {
+          name: "tactician.handler",
+          command: 'Ericc70\Expressopinionlite\Domain\Command\UpdateReponseCommand',
+        }
+
+  expressopinionlite.command.handler.add_vote:
+    class: 'Ericc70\Expressopinionlite\Domain\CommandHandler\AddVoteCommandHandler'
+    arguments:
+      - "@doctrine.orm.default_entity_manager"
+      - "@expressopinionlite.repository.vote_repository"
+
+    tags:
+      - {
+          name: "tactician.handler",
+          command: 'Ericc70\Expressopinionlite\Domain\Command\AddVoteCommand',
+        }
+
+  expressopinionlite.command.handler.add_vote_history:
+    class: 'Ericc70\Expressopinionlite\Domain\CommandHandler\AddVoteHistoryCommandHandler'
+    arguments:
+      - "@doctrine.orm.default_entity_manager"
+      - "@expressopinionlite.repository.vote_history_repository"
+    tags:
+      - {
+          name: "tactician.handler",
+          command: 'Ericc70\Expressopinionlite\Domain\Command\AddVoteHistoryCommand',
+        }
+
+

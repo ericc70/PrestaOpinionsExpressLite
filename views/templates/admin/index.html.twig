@@ -1,409 +1,124 @@
 {%  extends '@PrestaShop/Admin/layout.html.twig' %}
 
-
 {% block stylesheets %}
-    {{ parent() }}
-    {# <link rel="stylesheet" href="{{ asset('themes/your-theme/assets/css/custom-admin.css') }}"> #}
- <style>
-        .bg-c-blue {
-            background: linear-gradient(45deg,#4099ff,#73b4ff);
-        }
-        .fs-8{
-            font-size: 0.8rem;
-        }
-        .fs-12{
-            font-size: 1.2rem;
-        }
-        .fs-11{
-            font-size: 1.1rem;
-        }
-        .f-color-b-01{
-            color: #f0f8ff;
-        }
-    </style>
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('/modules/expressopinionlite/views/assets/css/bo-index.css') }}">
 {% endblock %}
 
 {% block content %}
-<section class="container mt-5 card panel p-2" id="calendar">
 
 
-		
-        <div class="row">
 	<form action="http://localhost:8080/admin983auezka27chc8n6ya/express-opinion-lite/vote/a" method="post" id="calendar_form" name="calendar_form" class="form-inline">
-			<div class="col-12 ">
-				<div class="btn-group">
-					<button type="submit" name="submitDateDay" class="btn btn-default submitDateDay">Jour</button>
-					<button type="submit" name="submitDateMonth" class="btn btn-default submitDateMonth">Mois</button>
-					<button type="submit" name="submitDateYear" class="btn btn-default submitDateYear">Année</button>
-					<button type="submit" name="submitDateDayPrev" class="btn btn-default submitDateDayPrev">Jour-1</button>
-					<button type="submit" name="submitDateMonthPrev" class="btn btn-default submitDateMonthPrev">Mois-1</button>
-					<button type="submit" name="submitDateYearPrev" class="btn btn-default submitDateYearPrev">Année-1</button>
+		<section class="container mt-5 card panel p-2" id="calendar">
+			<div class="row">
+				<div class="col-12 ">
+					<div class="btn-group">
+						<button type="submit" name="submitDateDay" class="btn btn-default submitDateDay">Jour</button>
+						<button type="submit" name="submitDateMonth" class="btn btn-default submitDateMonth">Mois</button>
+						<button type="submit" name="submitDateYear" class="btn btn-default submitDateYear">Année</button>
+						<button type="submit" name="submitDateDayPrev" class="btn btn-default submitDateDayPrev">Jour-1</button>
+						<button type="submit" name="submitDateMonthPrev" class="btn btn-default submitDateMonthPrev">Mois-1</button>
+						<button type="submit" name="submitDateYearPrev" class="btn btn-default submitDateYearPrev">Année-1</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="row pt-2">
+				<div class="col-6 col-md-4">
+					<div class="input-group">
+						<span class="input-group-text" id="addon-wrapping">Du</span>
+						<input type="date" name="datepickerFrom" id="datepickerFrom" value="2024-01-01" class="datepicker form-control hasDatepicker">
+					</div>
+				</div>
+				<div class="col-6 col-md-4">
+					<div class="input-group">
+						<span class="input-group-text" id="addon-wrapping">Au</span>
+						<input type="date" name="datepickerTo" id="datepickerTo" value="2024-02-27" class="datepicker form-control hasDatepicker">
+					</div>
+				</div>
+				<div class="col-12 col-md-4 pt-2 pt-md-0">
+					<button type="submit" name="submitDatePicker" id="submitDatePicker" class="btn btn-default submitDatePicker">
+						<i class="icon-save"></i>
+						Rechecher</button>
+				</div>
+			</div>
+		</section>
+	</form>
+	<section class="container bg-c-blue mt-5 p-2">
+		<div class="row">
+			<div class="col-8">
+				<div class="row">
+					<div class="col">
+						<p class="m-b-20 font-weight-bold font-italic fs-8">Question :</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<p class="m-b-0 fw-bolder fs-11 ml-3 f-color-b-01">{{ question }}</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-4 d-flex align-items-center justify-content-end">
+				<div class="fs-12 font-weight-bold" id="date-viewer">...</div>
+				<div class="spinner spinner-secondary" role="status" style="display: none;">
+					<span class="sr-only">Loading...</span>
+				</div>
+
+
+			</div>
+		</div>
+	</section>
+
+
+	<section class="container mt-2">
+		<div class="row">
+			<div class="col-12 col-md-6">
+				<div class="card">
+					<h3 class="card-header">
+						{{ 'data :' | trans({}, 'Modules.Expressopinionlite.Admin')}}
+					</h3>
+					<div class="card-body ">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th scope="col">reponse</th>
+									<th scope="col">nombre</th>
+								</tr>
+							</thead>
+
+							<tbody class="table-body"></tbody>
+						</table>
+						<div id="table-01"></div>
+						<div class="spinner spinner-primay " role="status" style="display: none;">
+							<span class="visually-hidden">Chargement...</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-12 col-md-6">
+				<div class="card">
+					<h3 class="card-header">
+						{{ 'Graphique :' | trans({}, 'Modules.Expressopinionlite.Admin')}}
+					</h3>
+					<div class="card-body" id="chart-01">
+
+						<div class="spinner spinner-primary mt-1" role="status" style="display: none;">
+							<span class="visually-hidden">Chargement...</span>
+						</div>
+						<canvas id="chart-epl" width="200" height="200"></canvas>
+
+					</div>
 				</div>
 			</div>
 		</div>
-
-		<div class="row pt-2">				
-			<div class="col-6 col-md-4">
-        		<div class="input-group">
-					<span class="input-group-text" id="addon-wrapping">Du</span>
-					<input type="date" name="datepickerFrom" id="datepickerFrom" value="2024-01-01" class="datepicker form-control hasDatepicker">
-				</div>
-			</div>
-			<div class="col-6 col-md-4">
-				<div class="input-group">
-					 <span class="input-group-text" id="addon-wrapping">Au</span>
-					<input type="date" name="datepickerTo" id="datepickerTo" value="2024-02-27" class="datepicker form-control hasDatepicker">
-				</div>
-			</div>		
-			<div class="col-12 col-md-4 pt-2 pt-md-0">		
-				<button type="submit" name="submitDatePicker" id="submitDatePicker" class="btn btn-default"><i class="icon-save"></i> Rechecher</button>		
-			</div>
-            </form>
-		</div>	
-</section>
-
-<section class="container bg-c-blue mt-5 p-2">
-  <div class="row">
-    <div class="col-10">
-      <div class="row">
-        <div class="col">
-          <p class="m-b-20 font-weight-bold font-italic fs-8">Question :</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-           <p class="m-b-0 fw-bolder fs-11 ml-3 f-color-b-01">{{ question }}</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-2 d-flex align-items-center justify-content-end">
-        <div class="fs-12 font-weight-bold" id="date-viewer" >...</div>
-    </div>
-  </div>
-</section>
+	</section>
 
 
+{% endblock %}
 
-<section class="container mt-2">
-    <div class="row">
-        <div class="col-12 col-md-6"> 
-   	        <div class="card">
-	 			<h3 class="card-header">				
-					{{ 'data :' | trans({}, 'Modules.Expressopinionlite.Admin')}}
-				</h3>
-				<div class="card-body">
-                    <table class="table table-striped">
-						<thead>
-                            <tr>
-                            <th scope="col">reponse</th>
-                            <th scope="col">nombre</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-              
-                        {# {% if question is not empty %} #}
-    {# Display question #}
-{# {% else %} #}
-    {# Display a default message or nothing #}
-{# {% endif %} #}
-                            <tr>
-                                <td>oui</td>
-                                <td>50</td>
-                            </tr>
-                            <tr>
-                                <td>non</td>
-                                <td>20</td>  
-                            </tr>
-                            <tr>
-                                <td>nspp</td>
-                                <td>7</td>           
-                            </tr>
-                        </tbody>
-                    </table>
-				</div>
-			</div>
-        </div>
-   
-        <div class="col-12 col-md-6">
-                 <div class="card">
-	 			<h3 class="card-header">				
-					{{ 'Graphique :' | trans({}, 'Modules.Expressopinionlite.Admin')}}
-				</h3>
-				<div class="card-body">
-                   <canvas id="chart-epl" width="400" height="400"></canvas>
-				</div>
-			</div>
-        </div>
-    </div> 
-</section>
-{#  #}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-let myChart = null;
-
-function getBaseUrl() {
-    let pathSegments = window.location.pathname.split('/');
-    let prefix = pathSegments[1];
-    return window.location.origin + '/' + prefix + '/express-opinion-lite';
-}
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('#calendar_form');
-    const submitButtons = form.querySelectorAll('button[type="submit"]');
-    const datepickerFrom = document.querySelector('#datepickerFrom');
-    const datepickerTo = document.querySelector('#datepickerTo');
-
-    submitButtons.forEach(button => {
-        button.addEventListener('click', function(event) {
-            handleFormSubmit(event, this);
-        });
-    });
-
-  
-    
-    datepickerFrom.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-
-            event.preventDefault()
-            triggerSubmitDatePicker();
-        }
-    });
-
-    datepickerTo.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            event.preventDefault()
-            triggerSubmitDatePicker();
-        }
-    });
-
-    function handleFormSubmit(event, button) {
-        event.preventDefault();
-
-        const buttonName = button.getAttribute('name');
-        const formData = new FormData();
-        const url = form.getAttribute('action');
-        const method = form.getAttribute('method');
-
-        formData.append('buttonName', buttonName);
-
-        if (buttonName === "submitDatePicker") {
-            const dateFrom = document.querySelector('#datepickerFrom').value;
-            const dateTo = document.querySelector('#datepickerTo').value;
-            formData.append('dateFrom', dateFrom);
-            formData.append('dateTo', dateTo);
-        }
-
-       fetchNewData(formData)
-            .then(data => {
-             resetData(); 
-               displayNewData(data); 
-            })
-            .catch(error => {
-                
-                console.error('Error fetching data:', error);
-            });
-  
-
-    }
-
-    function triggerSubmitDatePicker() {
-        const submitDatePickerButton = form.querySelector('#submitDatePicker');
-        submitDatePickerButton.click();
-    }
-});
-
-
-
-
-function resetData() {
-    const tbody = document.querySelector('tbody')
-    tbody.innerHTML = ''
-}
-
-
-function fetchNewData(formData) {
-
-    const params = new URLSearchParams(window.location.search)
-    const tokenValue = params.get('_token')
-
-
-
-
-
-    return fetch(`${getBaseUrl()}/vote/a?_token=${tokenValue}`, {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-      //  console.log(data);
- 
-        return data
-      
-    })
-    .catch(error => {
-        console.error('Error fetching data:', error);
-    });
-}
-
-
-function displayNewData(data) {
-    //write charjs
-    if (myChart !== null) {
-            myChart.destroy();
-        }
-
-        const ctx = document.getElementById('chart-epl').getContext('2d');
-        myChart = new Chart(ctx, chartConfig(data));
-
-    
-
-    // write tabla
-    const tbody = document.querySelector('tbody');
-
-    const items = JSON.parse(data[0]);
-    // Vérifiez si 'items' est un tableau avant d'utiliser 'forEach'
-    if (Array.isArray(items.data)) {
-    items.data.forEach(item => {
-        const row = document.createElement('tr');
-        const reponseCell = document.createElement('td');
-        reponseCell.textContent = item.responseContent;
-        const nombreCell = document.createElement('td');
-        nombreCell.textContent = item.voteCount;
-
-        row.appendChild(reponseCell);
-        row.appendChild(nombreCell);
-        tbody.appendChild(row);
-    });
-    } else {
-    console.log('items.data is not an array');
-    }
-
-    //write date
-    console.dir(data)
-    console.log(items.extra.date)
-    getDateFetch(items.extra.date)
-
-}
-
-
-function loadData() {
- console.log('start load data')
-   // Garder une référence au graphique pour pouvoir le mettre à jour
-
-    resetData()
-         const formData = new FormData()
-        formData.append('buttonName', 'submitDateDay');
-      fetchNewData(formData)
-            .then(data => {
-            
-               displayNewData(data);
-            })
-            .catch(error => {
-                
-                console.error('Error fetching data:', error);
-            });
-    
-}
-function getDateFetch(data) {
-    console.log(data)
-    let textDate;
-    const contentDate = document.querySelector('#date-viewer')
-
-    // Si data est une chaîne de caractères
-    if (typeof data === 'string') {
-        textDate = formatDate(data)
-        contentDate.innerText = textDate
-    } 
-    // Si data est un tableau
-    else if (Array.isArray(data)) {
-        let dateArray = []
-        for (let i = 0; i < data.length; i++) {
-            dateArray.push(formatDate(data[i]))
-        }
-        contentDate.innerText = dateArray.join(' - ')
-    }
-}
-function formatDate(dateStr) {
-    let parts = dateStr.split('-');
-    let date;
-
-    if (parts.length === 1) {
-        // Only year is provided
-        date = new Date(parts[0], 0, 1);
-        return `année ${date.getFullYear()}`;
-    } else if (parts.length === 2) {
-        // Year and month are provided
-        date = new Date(parts[0], parts[1] - 1, 1); // 
-        return `${date.toLocaleString('fr-FR', { month: 'long' })} ${date.getFullYear()}`;
-    } else if (parts.length === 3) {
-        // Full date is provided
-        date = new Date(parts[0], parts[1] - 1, parts[2]); // 
-        return `${date.getDate()} ${date.toLocaleString('fr-FR', { month: 'long' })} ${date.getFullYear()}`;
-    }
-}
-
-
-window.addEventListener('load', (event) => {
-    let myChart = null;
-   loadData();
-});
-
-// chart js
-// chart js
-function chartConfig(data) {
-    // Configuration du graphique
-
-      const dataArray = JSON.parse(data[0]);
-const dataArrayData = dataArray.data
-    const chartData = {
-        labels:  dataArrayData.map(item => item.responseContent),
-        datasets: [{
-            label: 'Votes',
-            data: dataArrayData.map(item => item.voteCount),
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    };
-
-    const chartConfig = {
-        type: 'doughnut',
-        data: chartData,
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: false,
-                   
-                }
-            }
-        }
-    };
-
-    return chartConfig;
-}
-
-    // Sélectionnez le contexte du graphique
-   
-
-</script>
+{% block javascripts %}
+	{{ parent() }}
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="{{ asset(('/modules/expressopinionlite/views/assets/js/index.js')) }}"></script>
 {% endblock %}

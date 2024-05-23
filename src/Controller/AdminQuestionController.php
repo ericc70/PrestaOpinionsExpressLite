@@ -17,35 +17,18 @@ class AdminQuestionController extends FrameworkBundleAdminController
 {
     
     
-   /*
-    public function new(Request $request)
-    {
-        $form = $this->createForm(QuestionType::class);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $command = $form->getData();
-            $this->get('command_bus')->handle($command);
-
-            return $this->redirectToRoute('question_list');
-        }
-
-        return $this->render('question/new.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-  */
-  public function indexAction(Request $request)
+    public  function indexAction(Request $request)
     {
         $questionFormBuilder = $this->get('expressopinionlites.form.builder.contact_form_builder');
         $questionForm = $questionFormBuilder->getFormFor(1); 
         $questionForm->handleRequest($request);
+   
 
         $questionFormHandler = $this->get('expressopinionlites.form.handler.contact_form_handler');
-        $result=$questionFormHandler->handleFor(1, $questionForm);
+         $result=$questionFormHandler->handleFor(1, $questionForm);
 
         $responseHandler = $this->get('expressopinionlite.query.get_reponse_by_question_handler');
-       $reponses =  $responseHandler->handle(new GetReponse(1));
+    $reponses =  $responseHandler->handle(new GetReponse(1));
     
         if ($result->isSubmitted() && $result->isValid()) {
             $this->addFlash('success', $this->trans('Successful update.', 'Admin.Notifications.Success'));
@@ -57,34 +40,11 @@ class AdminQuestionController extends FrameworkBundleAdminController
             'enableSidebar' => true,
             'layoutTitle' =>$this->trans('Express Opinion Lite', 'Module.ExpressOpinionLite.Admin'),
             'questionForm' => $questionForm->createView(),
-            'responses' => $reponses,
+             'responses' => $reponses,
+          
 
         ]);
     }
-    /**
-     * 
-     */
-    /*
-    public function edit(Request $request, int $id)
-    {
-        $question = $this->getDoctrine()->getRepository(Question::class)->find($id);
 
 
-        $command = new UpdateQuestionCommand($id, $question->getContent());
-       
-        $form = $this->createForm(QuestionType::class, $command);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $command = $form->getData();
-            $this->get('command_bus')->handle($command);
-
-            return $this->redirectToRoute('question_list');
-        }
-
-        return $this->render('question/edit.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-    */
 }

@@ -57,6 +57,7 @@ class EcExpressopinionsVote
 
         return $this;
     }
+    
     public function __construct()
     {
         $this->responseId = new ArrayCollection();

@@ -2,25 +2,26 @@
 
 namespace Ericc70\Expressopinionlite\Domain\Command;
 
+use Ericc70\Expressopinionlite\Entity\EcExpressopinionsQuestion;
+
 class AddVoteCommand
 {
    
-    private int $questionId;
-    private int $responseId;
+    protected int $questionId;
+    protected int $responseId;
     
-    public function __construct(array $data)
+    public function __construct(int $questionId, int $responseId)
     {
        
-        $this->questionId = $data['questionId'];
-        $this->responseId = $data['responseId'];
-     
+        $this->questionId = $questionId;
+        $this->responseId = $responseId;
     }
 
   
     /**
      * Get the value of questionId
      */ 
-    public function getQuestionId()
+    public function getQuestionId(): int
     {
         return $this->questionId;
     }
@@ -29,7 +30,7 @@ class AddVoteCommand
     /**
      * Get the value of responseId
      */ 
-    public function getResponseId()
+    public function getResponseId() :int
     {
         return $this->responseId;
     }

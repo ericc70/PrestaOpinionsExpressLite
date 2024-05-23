@@ -1,0 +1,32 @@
+# query handler
+services:
+  _defaults:
+    public: true
+
+  expressopinionlite.query.get_reponse_by_question_handler:
+    class: 'Ericc70\Expressopinionlite\Domain\QueryHandler\GetReponseByQuestionHandler'
+    arguments:
+      - '@expressopinionlite.repository.response_repository'
+
+  expressopinionlite.query.search_vote_query_handler:
+    class: 'Ericc70\Expressopinionlite\Domain\QueryHandler\SearchVoteQueryHandler'
+    arguments:
+      - '@expressopinionlite.repository.vote_repository'
+
+  expressopinionlite.query.get_question_query_handler:
+    class: 'Ericc70\Expressopinionlite\Domain\QueryHandler\GetQuestionQueryHandler'
+    arguments:
+      - '@expressopinionlite.repository.question_repository'
+
+      # query front
+  expressionlite.query.response_linked_to_question_query_handler:
+    class: 'Ericc70\Expressopinionlite\Domain\QueryHandler\ResponseLinkedToQuestionQueryHandler'
+    arguments:
+      - '@expressopinionlite.repository.question_repository'
+      - '@expressopinionlite.repository.response_repository'
+
+  expressionlite.query.date_older_vote_query_handler:
+    class: 'Ericc70\Expressopinionlite\Domain\QueryHandler\DateOlderVoteQueryHandler'
+    arguments:
+      - '@expressopinionlite.repository.vote_history_repository'
+    

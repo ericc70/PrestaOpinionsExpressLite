@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use Ericc70\Expressopinionlite\Domain\Query\DateOlderVoteQuery;
+use Ericc70\Expressopinionlite\Domain\Query\GetQuestionQuery;
+use Ericc70\Expressopinionlite\Domain\Query\GetReponse;
 use Ericc70\Expressopinionlite\Install\Installer;
 
 if (!defined('_PS_VERSION_')) {
@@ -35,7 +38,7 @@ class ExpressOpinionLite extends Module
     public function install()
     {
         if (!parent::install()) return false;
-        
+
         $installer = new Installer();
         return $installer->install($this);
     }
@@ -49,49 +52,61 @@ class ExpressOpinionLite extends Module
 
     public function hookDisplayHome()
     {
-        echo "I am the king";
-        if ($this->context->customer->isLogged()) {
+
+        if ($this->context->customer->isLogged() && $this->isValidVoteConstumer() === true ) {
             $config = $this->getConfiguration();
-            // if database day  < day + 7
-            //limit le nombre de jour
-        // Générer un jeton CSRF et le stocker dans la session
-        $csrfToken = Tools::getToken(false);
-   
-        $this->context->cookie->csrf_token = $csrfToken;
-        //$question=$this->get('');
+       
+            $csrfToken = Tools::getToken(false);
+
+            $this->context->cookie->csrf_token = $csrfToken;
+            //get question
+            $questionHandler = $this->get('expressopinionlite.query.get_question_query_handler');
+            $question = $questionHandler->handle(new GetQuestionQuery(1));
+            //get reponse
+            $reponseHandler = $this->get('expressopinionlite.query.get_reponse_by_question_handler');
+            $reponse = $reponseHandler->handle(new GetReponse(1));
 
 
-        //get question
+            $this->context->controller->addJs($this->_path . '/views/assets/js/formulaire.js');
+            $this->context->controller->addCSS($this->_path . '/views/assets/css/formulaire.css');
 
+            $this->context->smarty->assign(array(
+                'form_action' => $this->context->link->getModuleLink('expressopinionlite', 'vote', array(), true),
+                'csrf_token' => $csrfToken,
+                'question' => $question[0]->getContent(),
+                'reponses' => $reponse
+            ));
 
-        //get reponse
-    
-        $this->context->controller->addJs($this->_path .'/views/assets/js/formulaire.js');
-        $this->context->controller->addCSS($this->_path.'/views/assets/css/formulaire.css');
-    
-        $this->context->smarty->assign(array(
-            'form_action' => $this->context->link->getModuleLink('expressopinionlite', 'vote', array(), true),
-            'csrf_token' => $csrfToken,
-            'question' => "the question here",
-            'reponses ' => "the reponses here"
-        ));
-    
-        return $this->display(__FILE__, 'views/templates/hook/home.tpl');
+            return $this->display(__FILE__, 'views/templates/hook/home.tpl');
+        }
     }
+
+
+    protected function isValidVoteConstumer()
+    {
+        $dateToCompare = \DateTime::createFromFormat('Y-m-d', date('Y-m-d') );
+
+        try {
+
+            $historyVote = $this->get('expressionlite.query.date_older_vote_query_handler');
+           return $historyVote->handle(new DateOlderVoteQuery($this->context->customer->id, $dateToCompare));
+           
+        } catch (\Throwable $th) {
+
+            return $th->getMessage();
+        }
+
+        
     }
-    
-    
     public function hookModuleRoutes()
     {
         return [];
     }
 
-    private function getConfiguration(){
-        return[
+    private function getConfiguration()
+    {
+        return [
             'nb_day' => 7,
         ];
-            
     }
-
 }
- 

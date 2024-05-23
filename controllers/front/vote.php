@@ -13,31 +13,35 @@ class expressopinionlitevoteModuleFrontController extends ModuleFrontController
     public function initContent()
     {
         parent::initContent();
-
-        $customerId = (int) $this->context->customer->id;
-
-        $requestData = $this->getRequestData();
-
-        if (!empty($requestData['errors'])) {
-            return $this->jsonResponse(['message' => 'Erreur dans les données de la requête', 'errors' => $requestData['errors']], 400);
+    
+        try {
+            $customerId = (int) $this->context->customer->id;
+    
+            $requestData = $this->getRequestData();
+    
+            if (!empty($requestData['errors'])) {
+                return $this->jsonResponse(['message' => 'Erreur dans les données de la requête', 'errors' => $requestData['errors']], 400);
+            }
+    
+            $this->isValidQuestion($requestData['idQuestion'], $requestData['idReponse']);
+    
+            $this->isValidVoteConstumer();
+    
+            $this->insertVote($requestData['idQuestion'], $requestData['idReponse']);
+            // $this->isValidVoteConstumer();
+            $this->insertVoteHistory($customerId);
+    
+            // Retourner une réponse JSON
+            $response = array(
+                'message' => 'Opération réussie',
+            );
+            return $this->jsonResponse($response, 200);
+        } catch (\Throwable $th) {
+            // Gérer les erreurs
+            return $this->jsonResponse(['message' => $th->getMessage()], 500);
         }
-
-        $validQuestion = $this->isValidQuestion($requestData['idQuestion'], $requestData['idReponse']);
-
-
-        $this->isValidVoteConstumer();
-
-        $this->insertVote($requestData['idQuestion'], $requestData['idReponse']);
-        // $this->isValidVoteConstumer();
-        $this->insertVoteHistory($customerId);
-
-
-        // Retourner une réponse JSON
-        $response = array(
-            'message' => 'Erreur inconnue',
-        );
-        return $this->jsonResponse($response, 400);
     }
+    
 
     private function getRequestData()
     {
@@ -117,7 +121,7 @@ class expressopinionlitevoteModuleFrontController extends ModuleFrontController
 
         try {
             $addVote = $this->get('expressopinionlite.command.handler.add_vote');
-            $addVote->handle(new AddVoteCommand(['questionId' => $idQuestion, 'responseId' => $idReponse]));
+            $addVote->handle(new AddVoteCommand( $idQuestion, $idReponse));
         } catch (\Throwable $th) {
             return $this->jsonResponse(['message' => $th->getMessage()], 400);
         }
