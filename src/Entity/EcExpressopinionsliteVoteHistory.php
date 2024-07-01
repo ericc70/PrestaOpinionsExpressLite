@@ -1,8 +1,7 @@
 <?php
+declare(strict_types=1);
 
 namespace Ericc70\Expressopinionlite\Entity;
-
-
 
 use Doctrine\ORM\Mapping as ORM;
 

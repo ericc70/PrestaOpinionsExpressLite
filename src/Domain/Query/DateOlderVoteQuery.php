@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ericc70\Expressopinionlite\Domain\Query;
 
 class DateOlderVoteQuery
@@ -18,10 +20,6 @@ class DateOlderVoteQuery
         $this->userId = $userId;
         $this->dateactu = $dateactu;
     }
-
-    // public function getQuestionId() :int{
-    //     return $this->questionId;
-    // }
 
     public function getUserId() :int{
         return $this->userId;

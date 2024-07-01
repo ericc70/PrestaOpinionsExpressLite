@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 use Ericc70\Expressopinionlite\Domain\Command\AddVoteCommand;
 use Ericc70\Expressopinionlite\Domain\Command\AddVoteHistoryCommand;
-use Ericc70\Expressopinionlite\Domain\Exeption\AnswerNotLinkedToQuestionException;
 use Ericc70\Expressopinionlite\Domain\Query\DateOlderVoteQuery;
 use Ericc70\Expressopinionlite\Domain\Query\ResponseLinkedToQuestionQuery;
-use PhpParser\Node\Stmt\TryCatch;
+
 
 class expressopinionlitevoteModuleFrontController extends ModuleFrontController
 {
@@ -13,24 +14,24 @@ class expressopinionlitevoteModuleFrontController extends ModuleFrontController
     public function initContent()
     {
         parent::initContent();
-    
+
         try {
             $customerId = (int) $this->context->customer->id;
-    
+
             $requestData = $this->getRequestData();
-    
+
             if (!empty($requestData['errors'])) {
                 return $this->jsonResponse(['message' => 'Erreur dans les données de la requête', 'errors' => $requestData['errors']], 400);
             }
-    
+
             $this->isValidQuestion($requestData['idQuestion'], $requestData['idReponse']);
-    
+
             $this->isValidVoteConstumer();
-    
+
             $this->insertVote($requestData['idQuestion'], $requestData['idReponse']);
             // $this->isValidVoteConstumer();
             $this->insertVoteHistory($customerId);
-    
+
             // Retourner une réponse JSON
             $response = array(
                 'message' => 'Opération réussie',
@@ -41,7 +42,7 @@ class expressopinionlitevoteModuleFrontController extends ModuleFrontController
             return $this->jsonResponse(['message' => $th->getMessage()], 500);
         }
     }
-    
+
 
     private function getRequestData()
     {
@@ -121,7 +122,7 @@ class expressopinionlitevoteModuleFrontController extends ModuleFrontController
 
         try {
             $addVote = $this->get('expressopinionlite.command.handler.add_vote');
-            $addVote->handle(new AddVoteCommand( $idQuestion, $idReponse));
+            $addVote->handle(new AddVoteCommand($idQuestion, $idReponse));
         } catch (\Throwable $th) {
             return $this->jsonResponse(['message' => $th->getMessage()], 400);
         }
@@ -130,10 +131,10 @@ class expressopinionlitevoteModuleFrontController extends ModuleFrontController
 
     private function insertVoteHistory($customerId)
     {
-      
+
         try {
             $addVote = $this->get('expressopinionlite.command.handler.add_vote_history');
-            $addVote->handle(new AddVoteHistoryCommand(['userId' => $customerId ]));
+            $addVote->handle(new AddVoteHistoryCommand(['userId' => $customerId]));
         } catch (\Throwable $th) {
             return $this->jsonResponse(['message' => $th->getMessage()], 400);
         }

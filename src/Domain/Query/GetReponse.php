@@ -1,11 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace Ericc70\Expressopinionlite\Domain\Query;
 
-
 class GetReponse
 {
-
     private $questionId;
 
     public function __construct(int $questionId)

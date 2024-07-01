@@ -31,7 +31,7 @@
 
     <div id="form-close">
       <p>
-        Merci pour votre participoation
+        Merci pour votre participation.
       </p>
     </div>
   </div>

@@ -1,5 +1,5 @@
-const token=document.querySelector('input[name="csrf_token"]').value // Gestion des interactions (Vanilla ES6)
-const idQuestion=document.querySelector('input[name="id_question"]').value // Gestion des interactions (Vanilla ES6)
+const token=document.querySelector('input[name="csrf_token"]').value 
+const idQuestion=document.querySelector('input[name="id_question"]').value 
 const form = document.querySelector('#formExpressOpinion');
 const radioButtons = document.querySelectorAll('input[type="radio"]');
 const formOpen = document.getElementById('form-open');
@@ -9,13 +9,11 @@ formClose.style.display = 'none';
 
 radioButtons.forEach((button) => {
   button.addEventListener("change", () => {
-    // Logique à exécuter lorsque l'utilisateur sélectionne une option
     let formData = new FormData();
     formData.append('token', token);
     formData.append('idQuestion', idQuestion);
     formData.append('idReponse', button.value);
  
-    
       fetch(form.getAttribute('action'), {
         method: 'POST',
         body: formData
@@ -24,10 +22,8 @@ radioButtons.forEach((button) => {
     .then(rep => { 
   
       if(rep.status == 200){
-        
         formOpen.style.display = 'none';
         formClose.style.display = 'block';
-
       }
       if(rep.status == 403){
        

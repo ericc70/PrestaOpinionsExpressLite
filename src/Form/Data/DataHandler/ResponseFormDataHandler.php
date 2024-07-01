@@ -1,10 +1,12 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Ericc70\Expressopinionlite\Form\Data\DataHandler;
 
 use Ericc70\Expressopinionlite\Domain\CommandBuilder\CommandBuilderInterface;
 use PrestaShop\PrestaShop\Core\CommandBus\CommandBusInterface;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataHandler\FormDataHandlerInterface;
-
 
 class ResponseFormDataHandler implements FormDataHandlerInterface
 {
@@ -19,7 +21,6 @@ class ResponseFormDataHandler implements FormDataHandlerInterface
 
     public function update($id, array $data)
     {
-       
         // Construire la commande de mise à jour
         $command = $this->builder->buildEditCommand($id, $data);
 

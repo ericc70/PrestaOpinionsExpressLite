@@ -1,16 +1,15 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Ericc70\Expressopinionlite\Form\Data\Provider;
 
-
-
-use Ericc70\Expressopinionlite\Repository\QuestionRepository; // Remplacez par votre propre repository
+use Ericc70\Expressopinionlite\Repository\QuestionRepository; 
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataProvider\FormDataProviderInterface;
-use Symfony\Component\Form\FormInterface;
 
 class QuestionFormDataProvider implements FormDataProviderInterface
 {
     private $questionRepository;
-
 
     public function __construct(QuestionRepository $questionRepository)
     {
@@ -28,8 +27,6 @@ class QuestionFormDataProvider implements FormDataProviderInterface
                 $data['content'] = "";
             }
         } else {
-          
-          
             $data['content'] = "";
         }
     

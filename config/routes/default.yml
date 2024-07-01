@@ -7,7 +7,6 @@ ec_expressOpinion_index:
     _legacy_controller: AdminExpressOpinionLite
     _legacy_link: AdminExpressOpinionLite
 
-
 ec_expressOpinion_question:
   path: /question
   methods: [GET, POST]
@@ -16,7 +15,6 @@ ec_expressOpinion_question:
     _disable_module_prefix: true
     _legacy_controller: AdminExpressOpinionLiteQuestionController
     _legacy_link: AdminExpressOpinionLiteQuestionController
-
 
 ec_expressOpinion_ajax_update_reponse:
   path: /response/a/edit

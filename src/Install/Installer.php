@@ -14,7 +14,7 @@ use Tab;
 class Installer
 {
     private $tabs = [
-        
+
         [
             'class_name' => "AdminExpressOpinionLite",
             'parent_class_name' => "AdminStats",
@@ -34,10 +34,9 @@ class Installer
 
         try {
             $this->registerHooks($module);
-             $this->installTab();
+            $this->installTab();
             $this->installDatabase();
-           $this->insertDataInDatabase();
-
+            $this->insertDataInDatabase();
         } catch (\Throwable $th) {
             return throw $th;
         }
@@ -53,9 +52,9 @@ class Installer
     public function registerHooks(Module $module)
     {
         $hooks = [
-             'moduleRoutes',
-             'displayHome',
-             //'displayHeader',
+            'moduleRoutes',
+            'displayHome',
+            //'displayHeader',
         ];
         return (bool)$module->registerHook($hooks);
     }
@@ -116,22 +115,21 @@ class Installer
         return $this->executeQueries(Database::unistallQueries());
     }
 
-    public function insertDataInDatabase():bool
+    public function insertDataInDatabase(): bool
     {
         return $this->executeQueries(Database::insertData());
-
     }
 
     private function executeQueries(array $queries): bool
     {
 
-        
+
         // if (empty($queries)) return true;
 
         foreach ($queries as $query) {
             if (!Db::getInstance()->execute($query)) return false;
         }
 
-        return true; 
+        return true;
     }
 }

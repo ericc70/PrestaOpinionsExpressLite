@@ -1,16 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace Ericc70\Expressopinionlite\Form\Type;
 
-
-
-// src/Form/CalendarFormType.php
-
-
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -31,10 +25,4 @@ class CalendarType extends AbstractType
             ->add('submitDatePicker', SubmitType::class, ['label' => 'Enregistrer']);
     }
 
-    // public function configureOptions(OptionsResolver $resolver)
-    // {
-    //     $resolver->setDefaults([
-    //         // Configure your form options here
-    //     ]);
-    // }
 }

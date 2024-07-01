@@ -1,19 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ericc70\Expressopinionlite\Controller;
 
-use Ericc70\Expressopinionlite\Domain\Command\UpdateQuestionCommand;
 use Ericc70\Expressopinionlite\Domain\Query\GetReponse;
-use Ericc70\Expressopinionlite\Domain\QueryHandler\GetReponseByQuestionHandler;
-use Ericc70\Expressopinionlite\Entity\Question;
-use Ericc70\Expressopinionlite\Form\Type\QuestionType;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use Symfony\Component\HttpFoundation\Request;
 
 
 class AdminExpressOpinionLiteQuestionController extends FrameworkBundleAdminController
 {
-
 
     public  function indexAction(Request $request)
     {
@@ -43,11 +40,8 @@ class AdminExpressOpinionLiteQuestionController extends FrameworkBundleAdminCont
             'layoutHeaderToolbarBtn' => $this->getToolBarButtons(),
             'questionForm' => $questionForm->createView(),
             'responses' => $reponses,
-           
-         
         ]);
     }
-
 
 
     public function getToolBarButtons()
@@ -57,7 +51,6 @@ class AdminExpressOpinionLiteQuestionController extends FrameworkBundleAdminCont
                 'desc' => $this->trans('Retour', 'Module.ExpressOpinionLite.Admin'),
                 'icon' => 'reply',
                 'href' => $this->generateUrl('ec_expressOpinion_index'),
-
             ],
         ];
     }

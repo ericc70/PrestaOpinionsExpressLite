@@ -1,12 +1,12 @@
 <?php
-namespace Ericc70\Expressopinionlite\Form\Type;
+declare(strict_types=1);
 
-// src/Form/QuestionType.php
+namespace Ericc70\Expressopinionlite\Form\Type;
 
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+
 
 class QuestionType extends AbstractType
 {
@@ -17,10 +17,4 @@ class QuestionType extends AbstractType
         ;
     }
 
-    // public function configureOptions(OptionsResolver $resolver)
-    // {
-    //     $resolver->setDefaults([
-    //         'data_class' => CreateQuestionCommand::class,
-    //     ]);
-    // }
 }

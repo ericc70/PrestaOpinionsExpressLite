@@ -22,27 +22,6 @@ class VoteHistoryRepository extends EntityRepository
             ->getOneOrNullResult();
     }
 
-    // public function isDateOlderThanForConsumer(
-    //     int $userId, 
-    //     // int $questionId, 
-    //     \DateTimeInterface $dateToCompare): bool
-    // {
-    //    return $this->createQueryBuilder('h')
-
-    //     ->select('DATEDIFF(:dateToCompare, h.createdAt)')
-    //        ->andWhere('h.userId = :userId')
-    //     //    ->andWhere('h.questionId = :questionId')
-    //        ->setParameter('userId', $userId)
-    //     //    ->setParameter('questionId', $questionId)
-    //        ->setParameter('dateToCompare', $dateToCompare)
-    //        ->orderBy('h.createdAt', 'DESC')
-    //        ->setMaxResults(1)
-    //        ->getQuery()
-    //        ->getSingleScalarResult() > 7;
-      
-
-    
-    // }
 
     public function isDateOlderThanForConsumer(int $userId, \DateTimeInterface $dateToCompare): bool
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ericc70\Expressopinionlite\Domain\QueryHandler;
 
 use Ericc70\Expressopinionlite\Domain\Exeption\AnswerNotFoundException;
@@ -21,20 +23,16 @@ class ResponseLinkedToQuestionQueryHandler
         $this->reponseRepository = $reponseRepository;
     }
 
-
     public function handle(ResponseLinkedToQuestionQuery $query)
     {
        
-
         $idQuestion = $query->getQuestionId();
         $idReponse = $query->getReponseId();
-
         // Check if the question exists
         $question = $this->questionRepository->findById($idQuestion);
         if ($question === null) {
             throw new QuestionNotFoundException("Question with ID {$idQuestion} not found.");
         }
-
         // Check if the answer exists
         $answer = $this->reponseRepository->findById($idReponse);
         if ($answer === null) {

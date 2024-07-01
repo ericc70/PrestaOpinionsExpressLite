@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Ericc70\Expressopinionlite\Domain\QueryHandler;
 
@@ -14,8 +15,6 @@ class SearchVoteQueryHandler
     {
         $this->voteRepository = $voteRepository;
     }
-
-
 
     public function handle(SearchVoteQuery $command)
     {

@@ -1,11 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ericc70\Expressopinionlite\Domain\CommandBuilder;
-
-
-
-
-
 
 use Ericc70\Expressopinionlite\Domain\Command\UpdateQuestionCommand as CommandUpdateQuestionCommand;
 

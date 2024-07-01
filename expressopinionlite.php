@@ -45,10 +45,10 @@ class ExpressOpinionLite extends Module
 
     public function uninstall()
     {
-            // Supprimer les valeurs de configuration spécifiques
-            if (!Configuration::deleteByName($this->name)) {
-                return false;
-            }
+        // Supprimer les valeurs de configuration spécifiques
+        if (!Configuration::deleteByName($this->name)) {
+            return false;
+        }
 
         if (!parent::uninstall()) return false;
         $installer = new Installer();
@@ -56,9 +56,10 @@ class ExpressOpinionLite extends Module
     }
 
     public function hookDisplayHome()
-    {        if ($this->context->customer->isLogged() && $this->isValidVoteConstumer() === true ) {
+    {
+        if ($this->context->customer->isLogged() && $this->isValidVoteConstumer() === true) {
             $config = $this->getConfiguration();
-       
+
             $csrfToken = Tools::getToken(false);
 
             $this->context->cookie->csrf_token = $csrfToken;
@@ -87,20 +88,17 @@ class ExpressOpinionLite extends Module
 
     protected function isValidVoteConstumer()
     {
-        $dateToCompare = \DateTime::createFromFormat('Y-m-d', date('Y-m-d') );
+        $dateToCompare = \DateTime::createFromFormat('Y-m-d', date('Y-m-d'));
 
         try {
 
             $historyVote = $this->get('expressionlite.query.date_older_vote_query_handler');
- 
-           return $historyVote->handle(new DateOlderVoteQuery($this->context->customer->id, $dateToCompare));
-           
+
+            return $historyVote->handle(new DateOlderVoteQuery($this->context->customer->id, $dateToCompare));
         } catch (\Throwable $th) {
 
             return $th->getMessage();
         }
-
-        
     }
     public function hookModuleRoutes()
     {

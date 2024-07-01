@@ -1,6 +1,8 @@
 <?php
-namespace Ericc70\Expressopinionlite\Domain\Query;
 
+declare(strict_types=1);
+
+namespace Ericc70\Expressopinionlite\Domain\Query;
 
 class GetQuestionQuery
 {

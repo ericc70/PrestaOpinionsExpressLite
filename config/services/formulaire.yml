@@ -23,8 +23,6 @@ services:
     arguments:
       - "@expressopinionlite.repository.question_repository"
            
-    
-
 # Formulire : builder
 
   expressopinionlites.form.builder.contact_form_builder:
@@ -33,7 +31,6 @@ services:
     arguments:
       - 'Ericc70\Expressopinionlite\Form\Type\QuestionType'
       - '@expressopinionlite.form.question_data_provider'
-
 
 # form Datahandler
 

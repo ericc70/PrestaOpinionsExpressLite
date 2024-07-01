@@ -16,7 +16,6 @@ services:
     arguments:
       - "@doctrine.orm.default_entity_manager"
       - "@expressopinionlite.repository.question_repository"
-     
     tags:
       - {
           name: "tactician.handler",
@@ -38,7 +37,6 @@ services:
     arguments:
       - "@doctrine.orm.default_entity_manager"
       - "@expressopinionlite.repository.vote_repository"
-
     tags:
       - {
           name: "tactician.handler",

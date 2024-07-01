@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ericc70\Expressopinionlite\Controller;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Response;
-use Ericc70\Expressopinionlite\Domain\Query\SearchVoteQuery;
 use Ericc70\Expressopinionlite\Domain\QueryBuilder\SearchVoteQueryBuilder;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,9 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AdminVoteController extends  FrameworkBundleAdminController
 {
-    public function getVote(Response $response)
-    {
-    }
 
     public function loadData(Request $request): JsonResponse
     {

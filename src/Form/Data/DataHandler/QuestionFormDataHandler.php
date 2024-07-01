@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Ericc70\Expressopinionlite\Form\Data\DataHandler;
 
 use Ericc70\Expressopinionlite\Domain\CommandBuilder\CommandBuilderInterface;

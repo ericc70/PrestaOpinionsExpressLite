@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ericc70\Expressopinionlite\Domain\Command;
 
 class AddVoteHistoryCommand
@@ -10,21 +12,9 @@ class AddVoteHistoryCommand
     
     public function __construct(array $data)
     {
-       
         // $this->questionId = $data['questionId'];
         $this->userId = $data['userId'];
-     
     }
-
-  
-    /**
-     * Get the value of questionId
-     */ 
-    // public function getQuestionId()
-    // {
-    //     return $this->questionId;
-    // }
-
 
     /**
      * Get the value of responseId

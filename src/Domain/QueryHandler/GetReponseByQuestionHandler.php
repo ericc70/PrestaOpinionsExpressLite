@@ -1,18 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ericc70\Expressopinionlite\Domain\QueryHandler;
 
-
-
-
-use Doctrine\ORM\EntityManagerInterface;
 use Ericc70\Expressopinionlite\Domain\Query\GetReponse;
 use Ericc70\Expressopinionlite\Repository\ResponseRepository;
 
 class GetReponseByQuestionHandler 
 {
 
-   
     private $repository;
 
     public function __construct( ResponseRepository $repository)

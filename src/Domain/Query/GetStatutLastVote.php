@@ -1,7 +1,7 @@
 <?php
+declare(strict_types=1);
 
 namespace Ericc70\Expressopinionlite\Domain\Query;
-
 
 class GetStatutLastVote
 {

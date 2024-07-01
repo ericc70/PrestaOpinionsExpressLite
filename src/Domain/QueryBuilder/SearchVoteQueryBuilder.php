@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Ericc70\Expressopinionlite\Domain\QueryBuilder;
 
@@ -9,7 +10,6 @@ class SearchVoteQueryBuilder
 
     public function BuildSearchVoteQuery(array $data)
     {
-
 
         if ($data['buttonName'] == 'submitDateDay') {
             $d = date('Y-m-d');

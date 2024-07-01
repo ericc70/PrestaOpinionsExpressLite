@@ -7,7 +7,7 @@ function insertNoDataMessage(containerSelector, message) {
     if (container) {
         // Créer une div pour afficher le message
         const messageDiv = document.createElement('div');
-        messageDiv.classList.add('alert', 'alert-warning'); 
+        messageDiv.classList.add('alert', 'alert-warning');
         messageDiv.textContent = message; // Ajouter le message
 
         // Ajouter la div au début du conteneur
@@ -18,7 +18,7 @@ function insertNoDataMessage(containerSelector, message) {
 }
 
 function removeNoDataMessage(containerSelector) {
-    const container = document.querySelector(containerSelector); 
+    const container = document.querySelector(containerSelector);
 
     // Vérifier si le conteneur existe
     if (container) {
@@ -36,26 +36,26 @@ function removeNoDataMessage(containerSelector) {
 }
 
 function showSpinner() {
-    const spinners = document.querySelectorAll('.spinner'); 
-    spinners.forEach(spinner => { 
-        spinner.style.display = 'block'; 
+    const spinners = document.querySelectorAll('.spinner');
+    spinners.forEach(spinner => {
+        spinner.style.display = 'block';
     });
 
     document.querySelector('.table-body').style.display = 'none';
-    document.querySelector('#chart-epl').style.display = 'none'; 
+    document.querySelector('#chart-epl').style.display = 'none';
     document.querySelector('#date-viewer').style.display = 'none';
 }
 
 
 function hideSpinner() {
-    const spinners = document.querySelectorAll('.spinner'); 
-    spinners.forEach(spinner => { 
-        spinner.style.display = 'none'; 
+    const spinners = document.querySelectorAll('.spinner');
+    spinners.forEach(spinner => {
+        spinner.style.display = 'none';
     });
 
     document.querySelector('.table-body').style.display = 'table-row-group';
-    document.querySelector('#chart-epl').style.display = 'block'; 
-    document.querySelector('#date-viewer').style.display = 'block'; 
+    document.querySelector('#chart-epl').style.display = 'block';
+    document.querySelector('#date-viewer').style.display = 'block';
 }
 
 
@@ -226,22 +226,22 @@ function loadData() {
 
 function getDateFetch(data) {
 )
-    let textDate;
-    const contentDate = document.querySelector('#date-viewer')
+let textDate;
+const contentDate = document.querySelector('#date-viewer')
 
-    // Si data est une chaîne de caractères
-    if (typeof data === 'string') {
-        textDate = formatDate(data)
-        contentDate.innerText = textDate
+// Si data est une chaîne de caractères
+if (typeof data === 'string') {
+    textDate = formatDate(data)
+    contentDate.innerText = textDate
+}
+// Si data est un tableau
+else if (Array.isArray(data)) {
+    let dateArray = []
+    for (let i = 0; i < data.length; i++) {
+        dateArray.push(formatDate(data[i]))
     }
-    // Si data est un tableau
-    else if (Array.isArray(data)) {
-        let dateArray = []
-        for (let i = 0; i < data.length; i++) {
-            dateArray.push(formatDate(data[i]))
-        }
-        contentDate.innerText = dateArray.join(' - ')
-    }
+    contentDate.innerText = dateArray.join(' - ')
+}
 }
 
 function formatDate(dateStr) {
@@ -292,20 +292,20 @@ function chartConfig(data) {
                 label: 'Votes',
                 data: dataArrayData.map(item => item.voteCount),
                 backgroundColor: [
-                    'rgba(74, 105, 189, 0.2)',  // Bleu Lavande
-                    'rgba(88, 214, 141, 0.2)',  // Vert Menthe
-                    'rgba(245, 203, 92, 0.2)',  // Jaune Soleil
-                    'rgba(231, 76, 60, 0.2)',   // Rouge Tomate
-                    'rgba(155, 89, 182, 0.2)',  // Violet Améthyste
-                    'rgba(241, 196, 15, 0.2)'   // Jaune Moutarde
+                    'rgba(74, 105, 189, 0.2)', // Bleu Lavande
+                    'rgba(88, 214, 141, 0.2)', // Vert Menthe
+                    'rgba(245, 203, 92, 0.2)', // Jaune Soleil
+                    'rgba(231, 76, 60, 0.2)', // Rouge Tomate
+                    'rgba(155, 89, 182, 0.2)', // Violet Améthyste
+                    'rgba(241, 196, 15, 0.2)' // Jaune Moutarde
                 ],
                 borderColor: [
-                    'rgba(74, 105, 189, 1)',    // Bleu Lavande
-                    'rgba(88, 214, 141, 1)',    // Vert Menthe
-                    'rgba(245, 203, 92, 1)',    // Jaune Soleil
-                    'rgba(231, 76, 60, 1)',     // Rouge Tomate
-                    'rgba(155, 89, 182, 1)',    // Violet Améthyste
-                    'rgba(241, 196, 15, 1)'     // Jaune Moutarde
+                    'rgba(74, 105, 189, 1)', // Bleu Lavande
+                    'rgba(88, 214, 141, 1)', // Vert Menthe
+                    'rgba(245, 203, 92, 1)', // Jaune Soleil
+                    'rgba(231, 76, 60, 1)', // Rouge Tomate
+                    'rgba(155, 89, 182, 1)', // Violet Améthyste
+                    'rgba(241, 196, 15, 1)' // Jaune Moutarde
                 ],
                 borderWidth: 1
             }]
