@@ -25,7 +25,7 @@
         </form>
 </div>
 </div>
-        <div class="expressopinion-sub-title"> Enquete anonymiser !</div>
+        <div class="expressopinion-sub-title"> Enquête anonymisée !</div>
     </div>
 
 

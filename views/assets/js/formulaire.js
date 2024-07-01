@@ -10,14 +10,11 @@ formClose.style.display = 'none';
 radioButtons.forEach((button) => {
   button.addEventListener("change", () => {
     // Logique à exécuter lorsque l'utilisateur sélectionne une option
-    console.log(`Option sélectionnée:  ${button.value}`);
-  
-
     let formData = new FormData();
     formData.append('token', token);
     formData.append('idQuestion', idQuestion);
     formData.append('idReponse', button.value);
-      console.log(formData)
+ 
     
       fetch(form.getAttribute('action'), {
         method: 'POST',
@@ -25,15 +22,15 @@ radioButtons.forEach((button) => {
       
     }) 
     .then(rep => { 
-      console.log(rep)
+  
       if(rep.status == 200){
         
         formOpen.style.display = 'none';
         formClose.style.display = 'block';
-        console.log("ee")
+
       }
       if(rep.status == 403){
-        console.log("ee")
+       
       }
     })
     .catch(err => console.log(err))

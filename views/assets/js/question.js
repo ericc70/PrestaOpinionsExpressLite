@@ -14,9 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const nameCells = document.querySelectorAll('#myTable tr td:nth-child(2)');
 
     nameCells.forEach(cell => {
-        const rowId = cell.parentElement.querySelector('th').innerText; // ID de la ligne associée
+        const rowId = cell.parentElement.querySelector('th').innerText; 
 
-        let originalContents = {}; // Objet pour stocker les contenus d'origine des cellules par ID de ligne
+        let originalContents = {}; 
 
         cell.addEventListener('focus', () => {
             // Stocker le contenu d'origine de la cellule lorsqu'elle gagne le focus
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         cell.addEventListener('keydown', event => {
             if (event.key === 'Enter') {
-                event.preventDefault(); // Empêcher le saut de ligne lorsque la touche "Enter" est pressée
+                event.preventDefault(); 
                 cell.blur(); // Enlever le focus de la cellule
             }
         });
@@ -36,10 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Stocker le contenu d'origine de la cellule
 
-            console.log(originalContents)
+            // console.log(originalContents)
 
             const spinner = document.createElement('div');
-            spinner.className = 'spinner'; // Ajoutez votre classe CSS pour le spinner
+            spinner.className = 'spinner'; 
             cell.appendChild(spinner);
 
             fetch(`${getBaseUrl()}/response/a/edit?_token=${tokenValue}`, {
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data.message);
+                    // console.log(data.message);
                     displayNotify(cell, "Succes", "statusok");
                     spinner.remove();
                 })
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     displayNotify(cell, "Error", "stauserror");
                 })
 
-            console.log(`ID: ${id}, Name: ${name}`);
+            // console.log(`ID: ${id}, Name: ${name}`);
         });
 
 
@@ -83,9 +83,8 @@ const displayNotify = (cell, notifier, className) => {
     const message = document.createElement('span');
     message.className = className;
     message.textContent = notifier;
-    cell.appendChild(message); // Ajouter le message à la cellule
-
+    cell.appendChild(message); 
     setTimeout(() => {
-        message.remove(); // Supprimer le message après un certain délai
+        message.remove(); 
     }, 5000);
 }
