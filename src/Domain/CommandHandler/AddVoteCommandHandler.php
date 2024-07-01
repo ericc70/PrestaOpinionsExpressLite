@@ -3,9 +3,10 @@ namespace Ericc70\Expressopinionlite\Domain\CommandHandler;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Ericc70\Expressopinionlite\Domain\Command\AddVoteCommand;
-use Ericc70\Expressopinionlite\Entity\EcExpressopinionsQuestion;
-use Ericc70\Expressopinionlite\Entity\EcExpressopinionsResponse;
-use Ericc70\Expressopinionlite\Entity\EcExpressopinionsVote;
+use Ericc70\Expressopinionlite\Entity\EcExpressopinionsliteQuestion;
+use Ericc70\Expressopinionlite\Entity\EcExpressopinionsliteResponse;
+
+use Ericc70\Expressopinionlite\Entity\EcExpressopinionsliteVote;
 use Ericc70\Expressopinionlite\Repository\VoteRepository;
 use Ericc70\Expressopinionlite\Repository\QuestionRepository;
 use Ericc70\Expressopinionlite\Repository\ResponseRepository;
@@ -28,14 +29,14 @@ class AddVoteCommandHandler
 
      
         try {
-            $entity = new EcExpressopinionsVote();
+            $entity = new EcExpressopinionsliteVote();
             $currentDateTime = new \DateTime();
 
             // Récupérer les objets EcExpressopinionsQuestion et EcExpressopinionsResponse 
-            $questionRepository = $this->entityManager->getRepository(EcExpressopinionsQuestion::class);
+            $questionRepository = $this->entityManager->getRepository(EcExpressopinionsliteQuestion::class);
             $question = $questionRepository->find($command->getQuestionId());
 
-            $responseRepository = $this->entityManager->getRepository(EcExpressopinionsResponse::class);
+            $responseRepository = $this->entityManager->getRepository(EcExpressopinionsliteResponse::class);
             $response = $responseRepository->find($command->getResponseId());
 
             if (!$question || !$response) {

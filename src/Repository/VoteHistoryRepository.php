@@ -58,7 +58,7 @@ class VoteHistoryRepository extends EntityRepository
             ->getOneOrNullResult();
     
         if (!$latestVote) {
-            return false; // No previous vote found, so it's not older than the given date
+            return true; // No previous vote found, so it's not older than the given date
         }
     
         $diff = $latestVote['createdAt']->diff($dateToCompare);

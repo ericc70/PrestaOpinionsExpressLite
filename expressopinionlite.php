@@ -45,15 +45,18 @@ class ExpressOpinionLite extends Module
 
     public function uninstall()
     {
+            // Supprimer les valeurs de configuration spécifiques
+            if (!Configuration::deleteByName($this->name)) {
+                return false;
+            }
+
         if (!parent::uninstall()) return false;
         $installer = new Installer();
         return $installer->uninstall($this);
     }
 
     public function hookDisplayHome()
-    {
-
-        if ($this->context->customer->isLogged() && $this->isValidVoteConstumer() === true ) {
+    {        if ($this->context->customer->isLogged() && $this->isValidVoteConstumer() === true ) {
             $config = $this->getConfiguration();
        
             $csrfToken = Tools::getToken(false);
@@ -89,6 +92,7 @@ class ExpressOpinionLite extends Module
         try {
 
             $historyVote = $this->get('expressionlite.query.date_older_vote_query_handler');
+ 
            return $historyVote->handle(new DateOlderVoteQuery($this->context->customer->id, $dateToCompare));
            
         } catch (\Throwable $th) {

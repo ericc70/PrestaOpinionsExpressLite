@@ -23,6 +23,7 @@ class DateOlderVoteQueryHandler
 
      
        $answer =  $this->voteHistoryRepository->isDateOlderThanForConsumer($userId, $dateActu);
+
         if (!$answer) {
             throw new DateOlderThanForConsumerExeption("le dernier vote n'est pas assez ancien.");
         }

@@ -14,9 +14,10 @@ use Tab;
 class Installer
 {
     private $tabs = [
+        
         [
             'class_name' => "AdminExpressOpinionLite",
-            'parent_class_name' => "AdminParentCustomer",
+            'parent_class_name' => "AdminStats",
             'name' => "Express Opinon Lite",
             'icon' => "",
             'wording' => "Opinion express des clients, version lite",
@@ -35,7 +36,7 @@ class Installer
             $this->registerHooks($module);
              $this->installTab();
             $this->installDatabase();
-          // $this->insertDataInDatabase();
+           $this->insertDataInDatabase();
 
         } catch (\Throwable $th) {
             return throw $th;

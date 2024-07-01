@@ -5,7 +5,7 @@ namespace Ericc70\Expressopinionlite\Domain\CommandHandler;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Ericc70\Expressopinionlite\Domain\Command\AddVoteHistoryCommand;
-use Ericc70\Expressopinionlite\Entity\EcExpressopinionsVoteHistory as EntityEcExpressopinionsVoteHistory;
+use Ericc70\Expressopinionlite\Entity\EcExpressopinionsliteVoteHistory as EntityEcExpressopinionsVoteHistory;
 use Ericc70\Expressopinionlite\Repository\VoteHistoryRepository;
 
 

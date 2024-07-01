@@ -1,17 +1,15 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Ericc70\Expressopinionlite\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Ericc70\Expressopinionlite\Repository\QuestionRepository")
+ * @ORM\Entity(repositoryClass="Ericc70\Expressopinionlite\Repository\ResponseRepository")
  * 
  */
-class EcExpressopinionsQuestion
+class EcExpressopinionsliteResponse
 {
     /**
      * @ORM\Id
@@ -25,18 +23,18 @@ class EcExpressopinionsQuestion
      */
     private $content;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $questionId;
+
     // Getters and setters
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId(int $id): void
-    {
-        $this->id= (int) $id;
-    }
-
-    public function getContent(): string
+    public function getContent(): ?string
     {
         return $this->content;
     }
@@ -44,6 +42,18 @@ class EcExpressopinionsQuestion
     public function setContent(string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getQuestionId(): ?int
+    {
+        return $this->questionId;
+    }
+
+    public function setQuestionId(int $questionId): self
+    {
+        $this->questionId = $questionId;
 
         return $this;
     }

@@ -5,15 +5,15 @@ namespace Ericc70\Expressopinionlite\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Ericc70\Expressopinionlite\Entity\EcExpressopinionsResponse;
-use Ericc70\Expressopinionlite\Entity\EcExpressopinionsQuestion;
+use Ericc70\Expressopinionlite\Entity\EcExpressopinionsliteResponse;
+use Ericc70\Expressopinionlite\Entity\EcExpressopinionsliteQuestion;
 
 /**
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Ericc70\Expressopinionlite\Repository\VoteRepository")
  * 
  */
-class EcExpressopinionsVote
+class EcExpressopinionsliteVote
 {
     /**
      * @ORM\Id
@@ -24,13 +24,13 @@ class EcExpressopinionsVote
 
    
    /**
-     * @ORM\ManyToOne(targetEntity="EcExpressopinionsQuestion")
+     * @ORM\ManyToOne(targetEntity="EcExpressopinionsliteQuestion")
      * @ORM\JoinColumn(name="question_id", referencedColumnName="id")
      */
     private $questionId;
 
    /**
-     * @ORM\ManyToOne(targetEntity="EcExpressopinionsResponse")
+     * @ORM\ManyToOne(targetEntity="EcExpressopinionsliteResponse")
      * @ORM\JoinColumn(name="response_id", referencedColumnName="id")
      */
     private $responseId;
@@ -46,12 +46,12 @@ class EcExpressopinionsVote
         return $this->id;
     }
 
-    public function getQuestionId(): ?EcExpressopinionsQuestion
+    public function getQuestionId(): ?EcExpressopinionsliteQuestion
     {
         return $this->questionId;
     }
 
-    public function setQuestionId(?EcExpressopinionsQuestion $questionId): self
+    public function setQuestionId(?EcExpressopinionsliteQuestion $questionId): self
     {
         $this->questionId = $questionId;
 
@@ -66,14 +66,14 @@ class EcExpressopinionsVote
 /**
      * Retourne uniquement les réponses associées à ce vote.
      *
-     * @return Collection|EcExpressopinionsResponse[]
+     * @return Collection|EcExpressopinionsliteResponse[]
      */
     public function getResponseId(): Collection
     {
         return $this->responseId;
     }
 
-    public function setResponseId( ?EcExpressopinionsResponse $responseId): self
+    public function setResponseId( ?EcExpressopinionsliteResponse $responseId): self
     {
         $this->responseId = $responseId;
 

@@ -6,22 +6,22 @@ services:
     class: 'Ericc70\Expressopinionlite\Repository\QuestionRepository'
     factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
     arguments: 
-      - Ericc70\Expressopinionlite\Entity\EcExpressopinionsQuestion
+      - Ericc70\Expressopinionlite\Entity\EcExpressopinionsliteQuestion
  
   expressopinionlite.repository.response_repository:
     class: 'Ericc70\Expressopinionlite\Repository\ResponseRepository'
     factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
     arguments: 
-      - Ericc70\Expressopinionlite\Entity\EcExpressopinionsResponse
+      - Ericc70\Expressopinionlite\Entity\EcExpressopinionsliteResponse
 
   expressopinionlite.repository.vote_repository:
     class: 'Ericc70\Expressopinionlite\Repository\VoteRepository'
     factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
     arguments: 
-      - Ericc70\Expressopinionlite\Entity\EcExpressopinionsVote
+      - Ericc70\Expressopinionlite\Entity\EcExpressopinionsliteVote
   
   expressopinionlite.repository.vote_history_repository:
     class: 'Ericc70\Expressopinionlite\Repository\VoteHistoryRepository'
     factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
     arguments: 
-      - Ericc70\Expressopinionlite\Entity\EcExpressopinionsVoteHistory
+      - Ericc70\Expressopinionlite\Entity\EcExpressopinionsliteVoteHistory

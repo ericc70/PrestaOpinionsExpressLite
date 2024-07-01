@@ -4,11 +4,10 @@
 	{{ parent() }}
 	<link rel="stylesheet" href="{{ asset('/modules/expressopinionlite/views/assets/css/bo-question.css') }}">
 {% endblock %}
+
 {% block content %}
 
-	<hr>
-
-	<div class="row justify-content-center">
+	 <div class="row justify-content-center mt-5">
 		<div class="col">
 			{% block article_form %}
 				{{ form_start(questionForm) }}
@@ -20,14 +19,14 @@
 					<div class="card-block">
 						<div class="form-wrapper card-test">
 							{{ form_errors(questionForm)}}
-
+ 							{{ form_widget(questionForm.content, {'attr': {'class': 'form-control'}}) }}
 							{% block push_form_rest %}
 								{{ form_rest(questionForm)}}
 							{% endblock %}
 						</div>
 					</div>
 					<div class="card-footer">
-						<a href="{{path('oit_article_index') }}" class="btn btn-outline-secondary">
+						<a href="{{path('ec_expressOpinion_index') }}" class="btn btn-outline-secondary">
 							{{ 'Cancel' | trans({}, 'Admin.Actions') }}</a>
 						<button class="btn btn-primary float-right">
 							{{ 'Update' | trans({}, 'Admin.Actions') }}
@@ -37,11 +36,9 @@
 				{{ form_end(questionForm)}}
 			{% endblock %}
 		</div>
-	</div>
+	</div> 
 
-	<hr>
-
-	<div class="row justify-content-center">
+	<div class="row justify-content-center mt-3">
 		<div class="col">
 			<div class="card">
 				<h3 class="card-header">
@@ -72,10 +69,11 @@
 				<div class="card-footer"></div>
 			</div>
 		</div>
-	</div>
+	</div> 
 
 
 {% endblock %}
+
 {% block javascripts %}
 	{{ parent() }}
 

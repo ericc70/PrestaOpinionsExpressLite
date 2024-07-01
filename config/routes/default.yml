@@ -12,10 +12,10 @@ ec_expressOpinion_question:
   path: /question
   methods: [GET, POST]
   defaults:
-    _controller: Ericc70\Expressopinionlite\Controller\AdminQuestionController::indexAction
+    _controller: Ericc70\Expressopinionlite\Controller\AdminExpressOpinionLiteQuestionController::indexAction
     _disable_module_prefix: true
-    _legacy_controller: AdminQuestionController
-    _legacy_link: AdminQuestionController
+    _legacy_controller: AdminExpressOpinionLiteQuestionController
+    _legacy_link: AdminExpressOpinionLiteQuestionController
 
 
 ec_expressOpinion_ajax_update_reponse:

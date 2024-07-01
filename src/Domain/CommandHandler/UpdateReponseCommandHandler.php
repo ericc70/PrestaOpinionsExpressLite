@@ -4,6 +4,7 @@ namespace Ericc70\Expressopinionlite\Domain\CommandHandler;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Ericc70\Expressopinionlite\Domain\Command\UpdateReponseCommand;
+use Ericc70\Expressopinionlite\Entity\EcExpressopinionsliteResponse;
 use Ericc70\Expressopinionlite\Entity\EcExpressopinionsResponse;
 use Ericc70\Expressopinionlite\Repository\ResponseRepository;
 
@@ -20,7 +21,7 @@ class UpdateReponseCommandHandler {
 
     public function handle(UpdateReponseCommand $command)
     {
-        $reponse = $this->entityManager->getRepository(EcExpressopinionsResponse::class)->find($command->getId());
+        $reponse = $this->entityManager->getRepository(EcExpressopinionsliteResponse::class)->find($command->getId());
 
         if (!$reponse) {
             throw new \Exception('No reponse found for id '.$command->getId());

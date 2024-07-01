@@ -1,13 +1,13 @@
 let myChart = null;
 
 function insertNoDataMessage(containerSelector, message) {
-    const container = document.querySelector(containerSelector); // Sélectionner le conteneur spécifié par le sélecteur
+    const container = document.querySelector(containerSelector);
 
     // Vérifier si le conteneur existe
     if (container) {
         // Créer une div pour afficher le message
         const messageDiv = document.createElement('div');
-        messageDiv.classList.add('alert', 'alert-warning'); // Ajouter des classes Bootstrap pour le style
+        messageDiv.classList.add('alert', 'alert-warning'); 
         messageDiv.textContent = message; // Ajouter le message
 
         // Ajouter la div au début du conteneur
@@ -18,7 +18,7 @@ function insertNoDataMessage(containerSelector, message) {
 }
 
 function removeNoDataMessage(containerSelector) {
-    const container = document.querySelector(containerSelector); // Sélectionner le conteneur spécifié par le sélecteur
+    const container = document.querySelector(containerSelector); 
 
     // Vérifier si le conteneur existe
     if (container) {
@@ -36,26 +36,26 @@ function removeNoDataMessage(containerSelector) {
 }
 
 function showSpinner() {
-    const spinners = document.querySelectorAll('.spinner'); // Sélectionne tous les éléments avec la classe 'spinner'
-    spinners.forEach(spinner => { // Parcourt chaque élément sélectionné
-        spinner.style.display = 'block'; // Définit la propriété 'display' de style de chaque spinner sur 'block'
+    const spinners = document.querySelectorAll('.spinner'); 
+    spinners.forEach(spinner => { 
+        spinner.style.display = 'block'; 
     });
 
     document.querySelector('.table-body').style.display = 'none';
-    document.querySelector('#chart-epl').style.display = 'none'; // Masque le canvas du chart.js
+    document.querySelector('#chart-epl').style.display = 'none'; 
     document.querySelector('#date-viewer').style.display = 'none';
 }
 
 
 function hideSpinner() {
-    const spinners = document.querySelectorAll('.spinner'); // Sélectionne tous les éléments avec la classe 'spinner'
-    spinners.forEach(spinner => { // Parcourt chaque élément sélectionné
-        spinner.style.display = 'none'; // Définit la propriété 'display' de style de chaque spinner sur 'block'
+    const spinners = document.querySelectorAll('.spinner'); 
+    spinners.forEach(spinner => { 
+        spinner.style.display = 'none'; 
     });
 
-    document.querySelector('.table-body').style.display = 'table-row-group'; // Affiche le tbody du tableau
-    document.querySelector('#chart-epl').style.display = 'block'; // Affiche le canvas du chart.js
-    document.querySelector('#date-viewer').style.display = 'block'; // Affiche le canvas du chart.js
+    document.querySelector('.table-body').style.display = 'table-row-group';
+    document.querySelector('#chart-epl').style.display = 'block'; 
+    document.querySelector('#date-viewer').style.display = 'block'; 
 }
 
 
@@ -72,6 +72,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const datepickerFrom = document.querySelector('#datepickerFrom');
     const datepickerTo = document.querySelector('#datepickerTo');
 
+    const today = new Date();
+    const sixMonthsAgo = new Date();
+    sixMonthsAgo.setMonth(today.getMonth() - 6);
+
+    const pickto = (date) => date.toISOString().split('T')[0];
+
+    datepickerFrom.value = pickto(sixMonthsAgo);
+    datepickerTo.value = pickto(today);
 
     submitButtons.forEach(button => {
         button.addEventListener('click', function (event) {
@@ -112,7 +120,6 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('dateFrom', dateFrom);
             formData.append('dateTo', dateTo);
         }
-
         fetchNewData(formData)
             .then(data => {
                 resetData();
@@ -121,8 +128,6 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
-
-
     }
 
     function triggerSubmitDatePicker() {
@@ -198,6 +203,8 @@ function displayNewData(data) {
         getDateFetch(items.extra.date);
     } catch (error) {
         console.error('Error displaying data:', error);
+        insertNoDataMessage('#chart-01', 'Server error');
+        insertNoDataMessage('#table-01', 'Server error');
     }
 }
 
@@ -244,7 +251,7 @@ function formatDate(dateStr) {
     if (parts.length === 1) {
         // Only year is provided
         date = new Date(parts[0], 0, 1);
-        return `année ${date.getFullYear()}`;
+        return `Année ${date.getFullYear()}`;
     } else if (parts.length === 2) {
         // Year and month are provided
         date = new Date(parts[0], parts[1] - 1, 1); // 
@@ -285,20 +292,20 @@ function chartConfig(data) {
                 label: 'Votes',
                 data: dataArrayData.map(item => item.voteCount),
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+                    'rgba(74, 105, 189, 0.2)',  // Bleu Lavande
+                    'rgba(88, 214, 141, 0.2)',  // Vert Menthe
+                    'rgba(245, 203, 92, 0.2)',  // Jaune Soleil
+                    'rgba(231, 76, 60, 0.2)',   // Rouge Tomate
+                    'rgba(155, 89, 182, 0.2)',  // Violet Améthyste
+                    'rgba(241, 196, 15, 0.2)'   // Jaune Moutarde
                 ],
                 borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
+                    'rgba(74, 105, 189, 1)',    // Bleu Lavande
+                    'rgba(88, 214, 141, 1)',    // Vert Menthe
+                    'rgba(245, 203, 92, 1)',    // Jaune Soleil
+                    'rgba(231, 76, 60, 1)',     // Rouge Tomate
+                    'rgba(155, 89, 182, 1)',    // Violet Améthyste
+                    'rgba(241, 196, 15, 1)'     // Jaune Moutarde
                 ],
                 borderWidth: 1
             }]

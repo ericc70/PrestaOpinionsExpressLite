@@ -2,14 +2,14 @@
 .custom-button {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  /* background-color: #f0f0f0; */
+  /* border: 1px solid #ccc; */
+  border-radius: 3px;
   cursor: pointer;
 }
 
 .custom-button:hover {
-  background-color: #e0e0e0;
+  background-color:  rgb(0, 133, 159)
 }
 
 /* Styles pour les labels (facultatif) */
@@ -25,9 +25,16 @@
 
 .ec-form-opinion-titile{
   font-size: 1.5rem;
-  color:mediumvioletred;
-} 
+  color: rgb(0, 173, 190);
+  text-align: center;
+}
 
+
+.expressopinion-sub-title{
+  font-size: 1rem;
+  color: rgb(0, 173, 190);
+  text-align: right;
+}
 #container-expressopinion{
 
   margin-bottom: 20px;
@@ -36,5 +43,78 @@
 }
 
 .expressopinion-background01{
-    background-color: rgb(85, 64, 64);
+    background-color: rgb(44, 52, 82);
+}
+
+.custom-button-color{
+  background-color:  rgb(0, 173, 190);
+  color:  rgb(63, 77, 112); 
+
+}
+
+.express-flex{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.col-e-12{
+  width: 100%;
+}
+
+
+.m-auto{ margin:auto;}
+
+.rotating-image {
+
+  animation: rotateY 5s linear infinite; /* Définit l'animation */
+  transform-style: preserve-3d; /* Assure que l'image conserve ses propriétés 3D */
+
+  filter: invert(100%) sepia(100%) saturate(1000%) hue-rotate(0deg);
+  filter: invert(100%) sepia(100%) saturate(1000%) hue-rotate(400deg);
+}
+
+@keyframes rotateY {
+  from {
+      transform: rotateY(0deg); /* Début de l'animation */
+  }
+  to {
+      transform: rotateY(360deg); /* Fin de l'animation */
+  }
+}
+
+
+
+#form-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#form-body {
+  padding: 20px; /* Ajustez la valeur selon vos besoins */
+}
+
+.rotating-image {
+  max-width: 100%; /* Assure que l'image ne dépasse pas les limites de la div */
+  height: auto;    /* Garde les proportions de l'image */
+}
+
+
+@media (min-width: 768px) {
+  .col-e-md-3 {
+    width: 25%;
+  }
+  
+  .col-e-md-9 {
+    width: 75%;
+  }
+
+ 
+}
+
+.expressopinion-form{
+  display: flex;
+  justify-content: center;
 }

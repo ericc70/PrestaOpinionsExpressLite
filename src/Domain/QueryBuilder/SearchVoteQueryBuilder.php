@@ -33,7 +33,7 @@ class SearchVoteQueryBuilder
             return new SearchVoteQuery('ByMonth', $d);
         }
         if ($data['buttonName'] == 'submitDateYearPrev') {
-            $d = date('Y-m', strtotime("-1 year"));
+            $d = date('Y', strtotime("-1 year"));
             return new SearchVoteQuery('ByYear', $d);
         }
         if ($data['buttonName'] == 'submitDatePicker') {
