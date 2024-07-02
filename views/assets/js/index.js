@@ -225,7 +225,7 @@ function loadData() {
 }
 
 function getDateFetch(data) {
-)
+
 let textDate;
 const contentDate = document.querySelector('#date-viewer')
 
