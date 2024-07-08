@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
         cell.addEventListener('blur', () => {
-            const id = cell.parentElement.querySelector('th').innerText;
+            const id = parseInt(cell.parentElement.querySelector('th').innerText, 10);
             const name = cell.innerText;
             const row = cell.parentElement;
 
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        id,
+                        id: id,
                         content: name,
                         questionId: 1
                     }) //questionId
